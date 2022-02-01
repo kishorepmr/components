@@ -12,8 +12,8 @@ export const WebexAuth = Template.bind({});
 WebexAuth.args = {
   authUrl: 'https://webexapis.com/v1/authorize',
   responseType: 'code',
-  clientId: 'C185d483590b3b2b3abe9537bd0307bec772b187aa544b4471dfe9339c983d249',
-  redirectUri: 'https://b7f1-49-37-218-15.ngrok.io/verification',
+  clientId: process.env.webex_int_client_id,
+  redirectUri: 'https:/ngrok.io/verification', // Will be replaced by starter kit demo app url
   scope: 'webexsquare:get_conversation spark:all spark:kms Identity:SCIM',
   signInResponse: () => {},
   tokenStoragePolicy: 'cookie',
