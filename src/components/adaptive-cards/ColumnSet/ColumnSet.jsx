@@ -44,6 +44,7 @@ ColumnSet.defaultProps = {
 ColumnSet.acPropTypes = {
   bleed: acPropTypes.bleed,
   columns: acPropTypes.children,
+  fallback: acPropTypes.fallback,
   height: acPropTypes.height,
   horizontalAlignment: acPropTypes.horizontalAlignment,
   id: acPropTypes.id,
@@ -57,6 +58,7 @@ ColumnSet.acPropTypes = {
 
 ColumnSet.acDefaultProps = {
   horizontalAlignment: 'left',
+  isVisible: true,
 };
 
 registerComponent('ColumnSet', ColumnSet, 'horizontal');

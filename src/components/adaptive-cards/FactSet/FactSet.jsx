@@ -43,11 +43,16 @@ FactSet.defaultProps = {
 
 FactSet.acPropTypes = {
   facts: acPropTypes.children,
+  fallback: acPropTypes.fallback,
   id: acPropTypes.id,
   isVisible: acPropTypes.isVisible,
   separator: acPropTypes.separator,
   spacing: acPropTypes.spacing,
   type: acPropTypes.type,
+};
+
+FactSet.acDefaultProps = {
+  isVisible: true,
 };
 
 registerComponent('FactSet', FactSet);

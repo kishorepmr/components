@@ -38,6 +38,7 @@ Column.defaultProps = {
 Column.acPropTypes = {
   backgroundImage: acPropTypes.backgroundImage,
   bleed: acPropTypes.bleed,
+  fallback: acPropTypes.fallback,
   id: acPropTypes.id,
   isVisible: acPropTypes.isVisible,
   items: acPropTypes.children,
@@ -52,6 +53,7 @@ Column.acPropTypes = {
 };
 
 Column.acDefaultProps = {
+  isVisible: true,
   verticalContentAlignment: 'top',
 };
 

@@ -40,8 +40,8 @@ export default function RadioButton({
 
   const handleClick = () => enabled && onChange(!selected);
   const handleKeyDown = (event) => {
-    event.preventDefault();
     if (enabled && (event.key === SPACE_KEY || event.key === ENTER_KEY)) {
+      event.preventDefault();
       onChange(!selected);
     }
   };
@@ -59,7 +59,7 @@ export default function RadioButton({
       tabIndex={tabIndex}
     >
       <div className={sc('background')}>
-        <div className={sc('foreground')} />
+        {selected && <div className={sc('foreground')} />}
       </div>
       {title && <span className={sc('title')}>{title}</span>}
     </div>
@@ -82,7 +82,7 @@ RadioButton.defaultProps = {
   ariaLabel: undefined,
   className: undefined,
   selected: false,
-  disabled: true,
+  disabled: false,
   required: false,
   error: undefined,
   onChange: undefined,

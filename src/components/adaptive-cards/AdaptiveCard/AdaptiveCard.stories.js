@@ -6,7 +6,7 @@ export default {
   component: AdaptiveCard,
 };
 
-const Template = (args) => <AdaptiveCard {...args} />;
+const Template = (args) => <AdaptiveCard {...args} onSubmit={(inputs) => alert(`Submitted values:\n${JSON.stringify(inputs, null, 4)}`)} />;
 
 const exampleAdaptiveCard = {
   $schema: 'http://adaptivecards.io/schemas/adaptive-card.json',
@@ -1790,6 +1790,58 @@ const exampleInputText = {
       label: 'style: password',
       style: 'password',
     },
+    {
+      type: 'TextBlock',
+      text: 'Multiline text input:',
+    },
+    {
+      type: 'Input.Text',
+      id: 'multilineInputId',
+      placeholder: 'enter comment',
+      maxLength: 500,
+      isMultiline: true,
+    },
+    {
+      type: 'TextBlock',
+      text: 'Pre-filled value:',
+    },
+    {
+      type: 'Input.Text',
+      id: 'prefilledInputId',
+      placeholder: 'enter comment',
+      maxLength: 500,
+      isMultiline: true,
+      value: 'This value was pre-filled',
+    },
+  ],
+  actions: [
+    {
+      type: 'Action.Submit',
+      title: 'OK',
+    },
+  ],
+};
+
+const exampleInputTime = {
+  $schema: 'http://adaptivecards.io/schemas/adaptive-card.json',
+  type: 'AdaptiveCard',
+  version: '1.0',
+  body: [
+    {
+      type: 'Input.Time',
+      id: 'timeValueSet',
+      label: 'Start time',
+      min: '10:00',
+      max: '18:00',
+      value: '12:43',
+    },
+    {
+      type: 'Input.Time',
+      id: 'timeValueUnset',
+      label: 'End time',
+      isRequired: 'true',
+      errorMessage: 'This input is required',
+    },
   ],
   actions: [
     {
@@ -1860,6 +1912,328 @@ const exampleActionOpenUrl = {
   ],
 };
 
+const exampleActionShowCard = {
+  $schema: 'http://adaptivecards.io/schemas/adaptive-card.json',
+  type: 'AdaptiveCard',
+  version: '1.0',
+  body: [
+    {
+      type: 'TextBlock',
+      text: 'This card\'s action will show another card',
+    },
+  ],
+  actions: [
+    {
+      type: 'Action.ShowCard',
+      title: 'Show another card 1',
+      card: {
+        type: 'AdaptiveCard',
+        body: [
+          {
+            type: 'TextBlock',
+            text: 'Card 1: What do you think?',
+          },
+        ],
+        actions: [
+          {
+            type: 'Action.Submit',
+            title: 'Neat!',
+          },
+        ],
+      },
+    },
+    {
+      type: 'Action.ShowCard',
+      title: 'Show another card 2',
+      card: {
+        type: 'AdaptiveCard',
+        body: [
+          {
+            type: 'TextBlock',
+            text: 'Card 2: What do you think?',
+          },
+        ],
+        actions: [
+          {
+            type: 'Action.Submit',
+            title: 'Neat!',
+          },
+        ],
+      },
+    },
+  ],
+};
+
+const exampleActionToggleVisibility = {
+  type: 'AdaptiveCard',
+  version: '1.2',
+  body: [
+    {
+      type: 'TextBlock',
+      text: 'Press the buttons to toggle the images!',
+      wrap: true,
+    },
+    {
+      type: 'TextBlock',
+      text: 'Here are some images:',
+      isVisible: false,
+      id: 'textToToggle',
+    },
+    {
+      type: 'ColumnSet',
+      columns: [
+        {
+          type: 'Column',
+          items: [
+            {
+              style: 'person',
+              type: 'Image',
+              url: 'https://picsum.photos/100/100?image=112',
+              isVisible: false,
+              id: 'imageToToggle',
+              altText: 'sample image 1',
+              size: 'medium',
+            },
+          ],
+        },
+        {
+          type: 'Column',
+          items: [
+            {
+              type: 'Image',
+              url: 'https://picsum.photos/100/100?image=123',
+              isVisible: false,
+              id: 'imageToToggle2',
+              altText: 'sample image 2',
+              size: 'medium',
+            },
+          ],
+        },
+      ],
+    },
+  ],
+  actions: [
+    {
+      type: 'Action.ToggleVisibility',
+      title: 'Toggle!',
+      targetElements: [
+        'textToToggle',
+        'imageToToggle',
+        'imageToToggle2',
+      ],
+    },
+    {
+      type: 'Action.ToggleVisibility',
+      title: 'Show!',
+      targetElements: [
+        {
+          elementId: 'textToToggle',
+          isVisible: true,
+        },
+        {
+          elementId: 'imageToToggle',
+          isVisible: true,
+        },
+        {
+          elementId: 'imageToToggle2',
+          isVisible: true,
+        },
+      ],
+    },
+    {
+      type: 'Action.ToggleVisibility',
+      title: 'Hide!',
+      targetElements: [
+        {
+          elementId: 'textToToggle',
+          isVisible: false,
+        },
+        {
+          elementId: 'imageToToggle',
+          isVisible: false,
+        },
+        {
+          elementId: 'imageToToggle2',
+          isVisible: false,
+        },
+      ],
+    },
+  ],
+};
+
+const exampleInputChoiceSet = {
+  $schema: 'http://adaptivecards.io/schemas/adaptive-card.json',
+  type: 'AdaptiveCard',
+  version: '1.0',
+  body: [
+    {
+      type: 'Input.ChoiceSet',
+      id: 'input1',
+      style: 'compact',
+      isMultiSelect: false,
+      label: 'Default Input.ChoiceSet label (compact)',
+      placeholder: 'Please make a selection',
+      choices: [
+        {
+          title: 'Option 1',
+          value: '1',
+        },
+        {
+          title: 'Option 2',
+          value: '2',
+        },
+      ],
+    },
+    {
+      type: 'Input.ChoiceSet',
+      id: 'input2',
+      style: 'compact',
+      isMultiSelect: false,
+      label: 'Required Input.ChoiceSet label (compact)',
+      isRequired: true,
+      errorMessage: 'Required input',
+      placeholder: 'Please make a selection',
+      value: '1',
+      choices: [
+        {
+          title: 'Option 1',
+          value: '1',
+        },
+        {
+          title: 'Option 2',
+          value: '2',
+        },
+      ],
+    },
+    {
+      type: 'Input.ChoiceSet',
+      id: 'input3',
+      style: 'expanded',
+      isMultiSelect: false,
+      label: 'Default Input.ChoiceSet label (expanded)',
+      value: '2',
+      choices: [
+        {
+          title: 'Option 1',
+          value: '1',
+        },
+        {
+          title: 'Option 2',
+          value: '2',
+        },
+      ],
+    },
+    {
+      type: 'Input.ChoiceSet',
+      id: 'input4',
+      style: 'expanded',
+      isMultiSelect: false,
+      label: 'Required Input.ChoiceSet label (expanded)',
+      isRequired: true,
+      errorMessage: 'Required input',
+      choices: [
+        {
+          title: 'Option 1',
+          value: '1',
+        },
+        {
+          title: 'Option 2',
+          value: '2',
+        },
+      ],
+    },
+    {
+      type: 'Input.ChoiceSet',
+      id: 'input5',
+      style: 'expanded',
+      isMultiSelect: true,
+      label: 'Default Input.ChoiceSet label (expanded, multiselect)',
+      choices: [
+        {
+          title: 'Option 1',
+          value: '1',
+        },
+        {
+          title: 'Option 2',
+          value: '2',
+        },
+      ],
+    },
+    {
+      type: 'Input.ChoiceSet',
+      id: 'input6',
+      style: 'compact',
+      isMultiSelect: true,
+      isRequired: true,
+      value: '1,3',
+      label: 'Required Input.ChoiceSet label (compact, multiselect)',
+      errorMessage: 'Required input',
+      choices: [
+        {
+          title: 'Option 1',
+          value: '1',
+        },
+        {
+          title: 'Option 2',
+          value: '2',
+        },
+        {
+          title: 'Option 3',
+          value: '3',
+        },
+      ],
+    },
+  ],
+  actions: [
+    {
+      type: 'Action.Submit',
+      title: 'OK',
+    },
+  ],
+};
+
+const exampleActionSubmit = {
+  $schema: 'http://adaptivecards.io/schemas/adaptive-card.json',
+  type: 'AdaptiveCard',
+  version: '1.0',
+  body: [
+    {
+      type: 'TextBlock',
+      text: 'Present a form and submit it back to the originator',
+    },
+    {
+      type: 'Input.Text',
+      id: 'firstName',
+      placeholder: 'What is your first name?',
+      isRequired: true,
+      errorMessage: 'FirstName is required',
+    },
+    {
+      type: 'Input.Text',
+      id: 'lastName',
+      placeholder: 'What is your last name?',
+    },
+    {
+      type: 'Input.Number',
+      id: 'review',
+      placeholder: 'Enter a number between 1 and 10',
+      min: 1,
+      max: 10,
+      value: 3,
+    },
+  ],
+  actions: [
+    {
+      type: 'Action.Submit',
+      title: 'Action.Submit',
+      data: {
+        x: 13,
+        y: 12,
+      },
+    },
+  ],
+};
+
 export const Card = Template.bind({});
 Card.args = {
   template: exampleAdaptiveCard,
@@ -1923,7 +2297,32 @@ InputText.args = {
   template: exampleInputText,
 };
 
+export const InputTime = Template.bind({});
+InputTime.args = {
+  template: exampleInputTime,
+};
+
 export const ActionOpenURL = Template.bind({});
 ActionOpenURL.args = {
   template: exampleActionOpenUrl,
+};
+
+export const ActionShowCard = Template.bind({});
+ActionShowCard.args = {
+  template: exampleActionShowCard,
+};
+
+export const ActionToggleVisibility = Template.bind({});
+ActionToggleVisibility.args = {
+  template: exampleActionToggleVisibility,
+};
+
+export const InputChoiceSet = Template.bind({});
+InputChoiceSet.args = {
+  template: exampleInputChoiceSet,
+};
+
+export const ActionSubmit = Template.bind({});
+ActionSubmit.args = {
+  template: exampleActionSubmit,
 };

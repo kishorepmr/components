@@ -87,9 +87,55 @@ export function clamp(num, min, max) {
   return Math.min(Math.max(num, min), max);
 }
 
+/**
+ * Returns an array that contains all the numbers in a specified range.
+ *
+ * @param {number} start  The first number in the interval
+ * @param {number} end  The last number in the interval
+ * @returns {Array<number>} An array with all the numbers in the range [start, end]
+ */
+export function range(start, end) {
+  return [...Array(end - start - 1).keys()].map((val) => start + val);
+}
+
+/**
+ * Appends the character '0' to a one-digit number
+ *
+ * @param {number} value  The given number
+ * @returns {string} The result string
+ */
+export function pad2Zeros(value) {
+  return String(value || '').padStart(2, '0');
+}
+
+/**
+ * A callback that receives a value and a key and returns an updated value.
+ *
+ * @callback MapperCallback
+ * @param {*} value  The value to update.
+ * @param {string} key  The key corresponding to the value to update.
+ * @returns {*} The updated value
+ */
+
+/**
+ * Maps the values of an object
+ *
+ * @param {object} object  The object to modify
+ * @param {MapperCallback} mapper  Mapper function
+ * @returns {object} Returns an updated object with the same keys and updated object values
+ */
+export function mapValues(object, mapper) {
+  return Object.fromEntries(Object.entries(object).map(([key, value]) => (
+    [key, mapper(value, key)]
+  )));
+}
+
 export default {
   deepMerge,
   chainWith,
   isValidUrl,
   clamp,
+  range,
+  pad2Zeros,
+  mapValues,
 };

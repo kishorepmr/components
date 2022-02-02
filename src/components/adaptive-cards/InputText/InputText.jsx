@@ -4,6 +4,7 @@ import webexComponentClasses from '../../helpers';
 import AdaptiveCardContext from '../context/adaptive-card-context';
 import {acPropTypes, registerComponent} from '../Component/Component';
 import InputField from '../../generic/InputField/InputField';
+import Textbox from '../../inputs/Textbox/Textbox';
 
 /**
  * Adaptive Cards Input.Text component
@@ -16,7 +17,12 @@ import InputField from '../../generic/InputField/InputField';
  * @returns {object} JSX of the component
  */
 export default function InputText({data, className, style}) {
-  const {setValue, getValue, setInput} = useContext(AdaptiveCardContext);
+  const {
+    setValue,
+    getValue,
+    setInput,
+    getError,
+  } = useContext(AdaptiveCardContext);
   const [cssClasses] = webexComponentClasses('adaptive-cards-input-text', className);
 
   useEffect(() => {
@@ -39,25 +45,39 @@ export default function InputText({data, className, style}) {
   ]);
 
   return (
-    <InputField
-      className={cssClasses}
-      style={style}
-      maxLength={data.maxLength}
-      placeholder={data.placeholder}
-      pattern={data.regex}
-      type={data.style}
-      value={getValue(data.id)}
-      error={data.errorMessage}
-      required={data.isRequired}
-      label={data.label}
-      onChange={(value) => setValue(data.id, value)}
-    />
+    !data.isMultiline ? (
+      <InputField
+        className={cssClasses}
+        error={getError(data.id)}
+        label={data.label}
+        maxLength={data.maxLength}
+        onChange={(value) => setValue(data.id, value)}
+        pattern={data.regex}
+        placeholder={data.placeholder}
+        required={data.isRequired}
+        style={style}
+        type={data.style}
+        value={getValue(data.id)}
+      />
+    ) : (
+      <Textbox
+        className={cssClasses}
+        error={getError(data.id)}
+        label={data.label}
+        maxLength={data.maxLength}
+        onChange={(value) => setValue(data.id, value)}
+        placeholder={data.placeholder}
+        required={data.isRequired}
+        style={style}
+        value={getValue(data.id)}
+      />
+    )
   );
 }
 
 InputText.propTypes = {
-  data: PropTypes.shape().isRequired,
   className: PropTypes.string,
+  data: PropTypes.shape().isRequired,
   style: PropTypes.shape(),
 };
 
@@ -68,6 +88,7 @@ InputText.defaultProps = {
 
 InputText.acPropTypes = {
   errorMessage: acPropTypes.errorMessage,
+  fallback: acPropTypes.fallback,
   height: acPropTypes.height,
   id: acPropTypes.id,
   isRequired: acPropTypes.isRequired,
@@ -81,6 +102,10 @@ InputText.acPropTypes = {
   style: acPropTypes.inputStyle,
   type: acPropTypes.type,
   value: acPropTypes.value,
+};
+
+InputText.acDefaultProps = {
+  isVisible: true,
 };
 
 registerComponent('Input.Text', InputText);

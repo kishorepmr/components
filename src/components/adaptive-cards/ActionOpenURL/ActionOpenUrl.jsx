@@ -35,7 +35,8 @@ ActionOpenUrl.defaultProps = {
   style: undefined,
 };
 
-Action.acPropTypes = {
+ActionOpenUrl.acPropTypes = {
+  fallback: acPropTypes.fallback,
   iconUrl: acPropTypes.iconUrl,
   id: acPropTypes.id,
   isEnabled: acPropTypes.isEnabled,
@@ -47,7 +48,7 @@ Action.acPropTypes = {
   url: acPropTypes.url,
 };
 
-Action.acDefaultProps = {
+ActionOpenUrl.acDefaultProps = {
   style: 'default',
 };
 

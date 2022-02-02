@@ -1,18 +1,25 @@
-import React from 'react';
+import React, {useContext, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import webexComponentClasses from '../../helpers';
+import AdaptiveCardContext from '../context/adaptive-card-context';
+import Spacer from '../Spacer/Spacer';
 
 const componentTypes = {};
 const containerTypes = {};
 
 export const acPropTypes = {
+  action: 'action',
+  actionStyle: 'action-style',
+  associatedInputs: 'associated-inputs',
   backgroundImage: 'background-image',
   bleed: 'bleed',
   children: 'children',
   color: 'color',
   containerStyle: 'container-style',
+  data: 'data',
   defaultImageSize: 'default-image-size',
   errorMessage: 'error-message',
+  fallback: 'fallback',
   fontType: 'font-type',
   height: 'height',
   highlight: 'highlight',
@@ -23,6 +30,7 @@ export const acPropTypes = {
   imageStyle: 'image-style',
   inputStyle: 'input-style',
   isEnabled: 'is-enabled',
+  isMultiSelect: 'is-multi-select',
   isRequired: 'is-required',
   isSubtle: 'is-subtle',
   isVisible: 'is-visible',
@@ -41,6 +49,7 @@ export const acPropTypes = {
   spacing: 'spacing',
   strikethrough: 'strikethrough',
   style: 'style',
+  targetElements: 'target-elements',
   text: 'text',
   title: 'title',
   tooltip: 'tooltip',
@@ -98,11 +107,28 @@ UnknownComponent.defaultProps = {
  * @param {object} props.data  Active Cards definition
  * @param {string} [props.className]  Custom CSS class to apply
  * @param {object} [props.style]  Custom style to apply
+ * @param {object} [otherProps]  Other props that must be passed from a parent AC component to a child
  * @returns {object} JSX of the component
  */
-export default function Component({data, className, style: styleProp}) {
+export default function Component({
+  data, className, style: styleProp, ...otherProps
+}) {
+  const {setElement, getIsVisible} = useContext(AdaptiveCardContext);
+
+  useEffect(() => {
+    setElement({
+      id: data.id,
+      isVisible: data.isVisible !== false,
+    });
+  }, [
+    data.id,
+    data.isVisible,
+    setElement,
+  ]);
+
   const [cssClasses] = webexComponentClasses('ac', className);
-  const C = componentTypes[data.type] || UnknownComponent;
+  const fallback = data.fallback !== 'drop' && componentTypes[data.fallback];
+  const C = componentTypes[data.type] || fallback || UnknownComponent;
   const classes = [];
   const getClass = (propType, value) => (value ? `wxc-ac-${propType}--${String(value).toLowerCase()}` : '');
   const style = {};
@@ -117,9 +143,12 @@ export default function Component({data, className, style: styleProp}) {
         console.log('[Component]', 'Unknown property', prop);
         break;
       case acPropTypes.action:
+      case acPropTypes.associatedInputs:
       case acPropTypes.children:
+      case acPropTypes.data:
       case acPropTypes.defaultImageSize:
       case acPropTypes.errorMessage:
+      case acPropTypes.fallback:
       case acPropTypes.iconUrl:
       case acPropTypes.id:
       case acPropTypes.label:
@@ -129,7 +158,12 @@ export default function Component({data, className, style: styleProp}) {
       case acPropTypes.mode:
       case acPropTypes.placeholder:
       case acPropTypes.regex:
+      case acPropTypes.separator:
+      case acPropTypes.spacing:
       case acPropTypes.style:
+      case acPropTypes.isMultiSelect:
+      case acPropTypes.isRequired:
+      case acPropTypes.targetElements:
       case acPropTypes.text:
       case acPropTypes.tooltip:
       case acPropTypes.type:
@@ -172,6 +206,9 @@ export default function Component({data, className, style: styleProp}) {
           classes.push(getClass(`${propType}-vertical-alignment`, value.verticalAlignment));
         }
         break;
+      case acPropTypes.isVisible:
+        classes.push(getClass(propType, getIsVisible(data.id).toString()));
+        break;
       default:
         classes.push(getClass(propType, value));
         break;
@@ -184,12 +221,26 @@ export default function Component({data, className, style: styleProp}) {
     classes.push(getClass('container', containerType));
   }
 
-  return (
-    <C
-      data={data}
-      className={`${cssClasses} ${classes.join(' ')}`}
-      style={{...style, ...styleProp}}
+  const props = {
+    data,
+    className: `${cssClasses} ${classes.join(' ')}`,
+    style: {...style, ...styleProp},
+    ...otherProps,
+  };
+
+  const spacer = C.acPropTypes?.spacing && (
+    <Spacer
+      spacing={data.spacing}
+      separator={data.separator}
     />
+  );
+
+  return (
+    <>
+      {spacer}
+      {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+      <C {...props} />
+    </>
   );
 }
 
@@ -197,9 +248,11 @@ Component.propTypes = {
   data: PropTypes.shape().isRequired,
   className: PropTypes.string,
   style: PropTypes.shape(),
+  otherProps: PropTypes.shape(),
 };
 
 Component.defaultProps = {
   className: undefined,
   style: undefined,
+  otherProps: undefined,
 };

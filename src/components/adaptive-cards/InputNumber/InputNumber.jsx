@@ -17,7 +17,12 @@ import InputField from '../../generic/InputField/InputField';
  */
 export default function InputNumber({data, className, style}) {
   const [cssClasses] = webexComponentClasses('adaptive-cards-input-number', className);
-  const {setValue, getValue, setInput} = useContext(AdaptiveCardContext);
+  const {
+    setValue,
+    getValue,
+    setInput,
+    getError,
+  } = useContext(AdaptiveCardContext);
 
   useEffect(() => {
     setInput({
@@ -47,7 +52,7 @@ export default function InputNumber({data, className, style}) {
       min={data.min}
       placeholder={data.placeholder}
       value={getValue(data.id)}
-      error={data.errorMessage}
+      error={getError(data.id)}
       required={data.required}
       label={data.label}
       onChange={(value) => setValue(data.id, value)}
@@ -68,6 +73,7 @@ InputNumber.defaultProps = {
 
 InputNumber.acPropTypes = {
   errorMessage: acPropTypes.errorMessage,
+  fallback: acPropTypes.fallback,
   height: acPropTypes.height,
   id: acPropTypes.id,
   isRequired: acPropTypes.isRequired,
@@ -80,6 +86,9 @@ InputNumber.acPropTypes = {
   spacing: acPropTypes.spacing,
   type: acPropTypes.type,
   value: acPropTypes.value,
+};
+InputNumber.acDefaultProps = {
+  isVisible: true,
 };
 
 registerComponent('Input.Number', InputNumber);

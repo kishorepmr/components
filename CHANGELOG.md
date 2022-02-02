@@ -1,3 +1,97 @@
+# [1.239.0](https://github.com/webex/components/compare/v1.238.0...v1.239.0) (2022-01-31)
+
+
+### Features
+
+* **AdaptiveCard:** add jsdoc for mapValues() and use getError() in Input.Time component ([71be868](https://github.com/webex/components/commit/71be86864d4764e70913cc57e9150821cc8bac67))
+* **AdaptiveCardsInputText:** render Textbox component depending on isMultiline property ([0d46409](https://github.com/webex/components/commit/0d4640948d01bc5f83a9995f917bbe4433b50efd))
+* **inputs:** create Toggle component ([76ac323](https://github.com/webex/components/commit/76ac32364d032cd04481bb17b28b7c2d223e3666))
+
+# [1.238.0](https://github.com/webex/components/compare/v1.237.0...v1.238.0) (2022-01-31)
+
+
+### Features
+
+* **Select:** allow select options to expand horizontally ([fabfd29](https://github.com/webex/components/commit/fabfd29fa3636bef2c7745ba6107fa3b07e921e3))
+
+# [1.237.0](https://github.com/webex/components/compare/v1.236.0...v1.237.0) (2022-01-31)
+
+
+### Bug Fixes
+
+* **InputField:** prevent clear button overlapping inserted number ([3727076](https://github.com/webex/components/commit/37270760ef610d634bc847b16a48e2a07d2873d7))
+* **inputs:** set default value for tabIndex to zero ([49758c4](https://github.com/webex/components/commit/49758c4ec757d8badc9c90585d838dceec034cba))
+* **Option:** change the color of the check icon and remove the border and background from it ([84da4d9](https://github.com/webex/components/commit/84da4d9af34bdb090d7ea23018fca3c032b3d3f4))
+
+
+### Features
+
+* **AdaptiveCard:** implement spacing and separator properties ([72a35da](https://github.com/webex/components/commit/72a35daf5abc257503247db8c4ac5c00a83aa819))
+* **AdaptiveCardsActionSubmit:** create Action.Submit component ([70cef5d](https://github.com/webex/components/commit/70cef5d404aa7fc03d9ad28bce210ca3dca87002))
+
+# [1.236.0](https://github.com/webex/components/compare/v1.235.0...v1.236.0) (2022-01-28)
+
+
+### Features
+
+* **AdaptiveCardsInputTime:** implement Input.Time component ([631f4b8](https://github.com/webex/components/commit/631f4b8c3c94861558b65ab324ba5dff07cb23b4))
+
+# [1.235.0](https://github.com/webex/components/compare/v1.234.1...v1.235.0) (2022-01-28)
+
+
+### Features
+
+* **hooks:** implement useAdaptiveCard hook ([0ebf781](https://github.com/webex/components/commit/0ebf7818da5b2442311925175b8c0e894df81611))
+
+## [1.234.1](https://github.com/webex/components/compare/v1.234.0...v1.234.1) (2022-01-28)
+
+
+### Bug Fixes
+
+* **Select:** modify incorrect values for scss variables ([a9044f3](https://github.com/webex/components/commit/a9044f3f90e3cdf2691302944ebf348a97a65f45))
+
+# [1.234.0](https://github.com/webex/components/compare/v1.233.0...v1.234.0) (2022-01-27)
+
+
+### Features
+
+* **AdaptiveCardsActionToggleVisibility:** create Action.ToggleVisibility component ([ac551a2](https://github.com/webex/components/commit/ac551a2a819c57ad51f8ac9c051428c8c40172a6))
+
+# [1.233.0](https://github.com/webex/components/compare/v1.232.0...v1.233.0) (2022-01-26)
+
+
+### Features
+
+* **AdaptiveCardsComponent:** implement fallback property ([f7154ab](https://github.com/webex/components/commit/f7154abf9a4d87000f74d10829fd4bca830107a9))
+
+# [1.232.0](https://github.com/webex/components/compare/v1.231.1...v1.232.0) (2022-01-21)
+
+
+### Features
+
+* **AdaptiveCardsInputChoiceSet:** create InputChoiceSet component ([370e1e8](https://github.com/webex/components/commit/370e1e892bb47d40ab8b9b3941bf50eb7437b19a))
+
+## [1.231.1](https://github.com/webex/components/compare/v1.231.0...v1.231.1) (2022-01-20)
+
+
+### Bug Fixes
+
+* **themes:** standardize naming of scss variables ([29ab3f3](https://github.com/webex/components/commit/29ab3f301213a0ab2ba439873e366de2a58685f8))
+
+# [1.231.0](https://github.com/webex/components/compare/v1.230.1...v1.231.0) (2022-01-20)
+
+
+### Bug Fixes
+
+* **ActivityHeader:** make avatar smaller in Activity ([03d30c1](https://github.com/webex/components/commit/03d30c12548cc7da5eef56fab909992de6044e1f))
+* **InputField:** prevent clear button overlapping inserted number ([335891e](https://github.com/webex/components/commit/335891ed5fbcc547b6a4fb63aa727a21a3022485))
+
+
+### Features
+
+* **AdaptiveCardContext:** implement input data management ([adddaef](https://github.com/webex/components/commit/adddaeff10088e29ecfda7001c10eed7d2a3c7c8))
+* **AdaptiveCardsActionShowCard:** create Action.ShowCard component ([38cfca9](https://github.com/webex/components/commit/38cfca92dc541d95a26bf760aedcb45af8fe015b))
+
 ## [1.230.1](https://github.com/webex/components/compare/v1.230.0...v1.230.1) (2022-01-17)
 
 

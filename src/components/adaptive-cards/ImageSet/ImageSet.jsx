@@ -39,6 +39,7 @@ ImageSet.defaultProps = {
 };
 
 ImageSet.acPropTypes = {
+  fallback: acPropTypes.fallback,
   height: acPropTypes.height,
   images: acPropTypes.children,
   id: acPropTypes.id,
@@ -47,6 +48,10 @@ ImageSet.acPropTypes = {
   separator: acPropTypes.separator,
   spacing: acPropTypes.spacing,
   type: acPropTypes.type,
+};
+
+ImageSet.acDefaultProps = {
+  isVisible: true,
 };
 
 registerComponent('ImageSet', ImageSet, 'horizontal');

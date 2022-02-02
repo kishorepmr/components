@@ -41,6 +41,7 @@ RichTextBlock.defaultProps = {
 };
 
 RichTextBlock.acPropTypes = {
+  fallback: acPropTypes.fallback,
   horizontalAlignment: acPropTypes.horizontalAlignment,
   id: acPropTypes.id,
   inlines: acPropTypes.children,
@@ -52,6 +53,7 @@ RichTextBlock.acPropTypes = {
 
 RichTextBlock.acDefaultProps = {
   horizontalAlignment: 'left',
+  isVisible: true,
 };
 
 registerComponent('RichTextBlock', RichTextBlock);
