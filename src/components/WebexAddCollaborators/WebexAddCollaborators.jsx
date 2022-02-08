@@ -28,30 +28,38 @@ export default function WebexAddCollaborators() {
   const renderSuggestions = () => {
     if (!searchList) return null;
     const content = searchList.map((item) => {
-      const names = item.displayName.split(' ');
-      const initials =
+      const email = item?.emails ? item.emails[0] : '';
+      const names = item?.displayName?.split(' ');
+      let initials;
+
+      /* fetch the first char of the first name
+         and the last name to show as initials
+      */
+      if (names) {
+        initials =
         names.length === 1
           ? names[0][0]
           : `${names[0][0]}${names[names.length - 1][0]}`;
+      }
 
       return ({
-        value: item.emails[0],
+        value: email,
         label: (
           <div
             className={sc('suggestions-list')}
-            key={item.emails[0]}
+            key={email}
           >
             <div className={sc('avatar')}>
-              {item.avatar ? (
-                <img src={item.avatar} alt="" />
+              {item?.avatar ? (
+                <img src={item?.avatar} alt="" />
               ) : (
                 <span>{initials}</span>
               )}
             </div>
 
             <div className={sc('data')}>
-              <div>{item.displayName}</div>
-              <div>{item.emails[0]}</div>
+              <div>{item?.displayName}</div>
+              <div>{email}</div>
             </div>
           </div>),
       });
