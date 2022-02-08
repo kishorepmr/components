@@ -80,4 +80,62 @@ export default {
     orgID: 'org2',
     status: null,
   },
+  bar: [
+    {
+      ID: 'user1',
+      emails: [
+        'barbara@acme.com',
+      ],
+      displayName: 'Barbara German',
+      firstName: 'Barbara',
+      lastName: 'German',
+      nickname: 'Barbara',
+      avatar: './images/barbara.png',
+      orgID: 'org1',
+      status: 'dnd',
+    },
+  ],
+  br: [
+    {
+      ID: 'user5',
+      emails: [
+        'brandon@acme.com',
+      ],
+      displayName: 'Brandon Seeger',
+      firstName: 'Brandon',
+      lastName: 'Seeger',
+      nickname: 'Brandon',
+      avatar: './images/brandon.png',
+      orgID: 'org2',
+      status: null,
+    },
+    {
+      ID: 'user3',
+      emails: [
+        'brenda@acme.com',
+      ],
+      displayName: 'Brenda Song',
+      firstName: 'Brenda',
+      lastName: 'Song',
+      nickname: 'Brenda',
+      avatar: './images/brenda.png',
+      orgID: 'org1',
+      status: null,
+    },
+  ],
+  maria: [
+    {
+      ID: 'user6',
+      emails: [
+        'maria@acme.com',
+      ],
+      displayName: 'Maria Rossi',
+      firstName: 'Maria',
+      lastName: 'Rossi',
+      nickname: 'Maria',
+      avatar: './images/maria.png',
+      orgID: 'org2',
+      status: null,
+    },
+  ],
 };
