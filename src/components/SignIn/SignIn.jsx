@@ -12,6 +12,7 @@ import {Button} from '../generic';
  * @param {string} props.scope Scope required for the app
  * @param {Function} props.signInResponse Function called on successfull sign in
  * @param {Function} props.getAccessToken Function called to fetch access token from backend server
+ * @param {object} props.tokenStoragePolicy option to store token in cookie, local or session storage
  * @returns {object} JSX of the component
  */
 export default function SignIn({
@@ -21,6 +22,7 @@ export default function SignIn({
   scope,
   signInResponse,
   getAccessToken,
+  tokenStoragePolicy,
 }) {
   const openAuthUrl = () => {
     const arr = new Uint8Array(4);
@@ -33,6 +35,25 @@ export default function SignIn({
         clearInterval(timer);
         const accessToken = getAccessToken();
 
+        if (accessToken) {
+          if (Object.keys(tokenStoragePolicy).length !== 0) {
+            const {name, place} = tokenStoragePolicy;
+
+            switch (place) {
+              case 'cookie':
+                document.cookie = `${name}=${accessToken}`;
+                break;
+              case 'session':
+                sessionStorage.setItem(name, accessToken);
+                break;
+              case 'local':
+                localStorage.setItem(name, accessToken);
+                break;
+              default:
+                break;
+            }
+          }
+        }
         signInResponse(clientID, accessToken || Error('No access token was returned'));
       }
     }, 500);
@@ -58,10 +79,12 @@ SignIn.propTypes = {
   scope: PropTypes.string,
   signInResponse: PropTypes.func,
   getAccessToken: PropTypes.func,
+  tokenStoragePolicy: PropTypes.shape({place: PropTypes.string, name: PropTypes.string}),
 };
 
 SignIn.defaultProps = {
   scope: '',
   signInResponse: () => {},
   getAccessToken: () => {},
+  tokenStoragePolicy: {},
 };
