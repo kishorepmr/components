@@ -1,0 +1,23 @@
+$C:#{$WEBEX_COMPONENTS_CLASS_PREFIX}-add-collaborators;
+
+.#{$C} {
+    min-width: 300px;
+    width:auto;
+
+    .#{$C}__suggestions{
+        height:200px;
+        overflow-y: auto;
+
+        .#{$C}__suggestions-list {
+            display: flex;
+
+            .#{$C}__avatar {
+                width: 2.5rem;
+            }
+
+            .#{$C}__data {
+                padding-left: 10px;
+            }
+        }
+    }
+}
