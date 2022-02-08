@@ -86,4 +86,22 @@ export default class PeopleJSONAdapter extends PeopleAdapter {
       observer.complete();
     });
   }
+
+  /**
+   * Returns an observable that returns the persons list based
+   * on search query
+   *
+   * @param {string} query string to search list of people
+   * @returns {Observable.<Person>} Observable that emits person list
+   */
+  getPersonList(query) {
+    return Observable.create((observer) => {
+      if (this.datasource[query]) {
+        observer.next(this.datasource[query]);
+      } else {
+        observer.error(new Error(`could not find the person with query${query}`));
+      }
+      observer.complete();
+    });
+  }
 }
