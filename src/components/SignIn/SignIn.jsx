@@ -33,28 +33,35 @@ export default function SignIn({
     const timer = setInterval(() => {
       if (newWindow.closed) {
         clearInterval(timer);
-        const accessToken = getAccessToken();
+        getAccessToken().then((accessToken) => {
+          if (accessToken) {
+            if (Object.keys(tokenStoragePolicy).length !== 0) {
+              const {name, place, ttl} = tokenStoragePolicy;
 
-        if (accessToken) {
-          if (Object.keys(tokenStoragePolicy).length !== 0) {
-            const {name, place} = tokenStoragePolicy;
+              switch (place) {
+                case 'cookie': {
+                  const expiry = new Date();
 
-            switch (place) {
-              case 'cookie':
-                document.cookie = `${name}=${accessToken}`;
-                break;
-              case 'session':
-                sessionStorage.setItem(name, accessToken);
-                break;
-              case 'local':
-                localStorage.setItem(name, accessToken);
-                break;
-              default:
-                break;
+                  expiry.setSeconds(ttl);
+                  document.cookie = `${name}=${accessToken}; secure; expires=${expiry.toUTCString()}`;
+                  break;
+                }
+                case 'session':
+                  sessionStorage.setItem(name, accessToken);
+                  break;
+                case 'local':
+                  localStorage.setItem(name, accessToken);
+                  break;
+                default:
+                  break;
+              }
             }
           }
-        }
-        signInResponse(clientID, accessToken || Error('No access token was returned'));
+          signInResponse(clientID, accessToken || Error('No access token was returned'));
+        })
+          .catch((err) => {
+            signInResponse(clientID, Error('Failed to fetch access token: ', err));
+          });
       }
     }, 500);
   };
@@ -79,7 +86,9 @@ SignIn.propTypes = {
   scope: PropTypes.string,
   signInResponse: PropTypes.func,
   getAccessToken: PropTypes.func,
-  tokenStoragePolicy: PropTypes.shape({place: PropTypes.string, name: PropTypes.string}),
+  tokenStoragePolicy: PropTypes.shape(
+    {place: PropTypes.string, name: PropTypes.string, ttl: PropTypes.number},
+  ),
 };
 
 SignIn.defaultProps = {
