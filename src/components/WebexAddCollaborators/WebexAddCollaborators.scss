@@ -5,6 +5,7 @@ $C:#{$WEBEX_COMPONENTS_CLASS_PREFIX}-add-collaborators;
     max-width: 560px;
     width: 460px;
     color: var(--wxc-text-color);
+    margin-top: 20px;
 
     .#{$C}__people-list-box {
         background: var(--wxc-options-list--normal--background);
