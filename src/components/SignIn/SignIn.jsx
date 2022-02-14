@@ -12,6 +12,7 @@ import {Button} from '../generic';
  * @param {string} props.scope Scope required for the app
  * @param {Function} props.signInResponse Function called on successfull sign in
  * @param {Function} props.getAccessToken Function called to fetch access token from backend server
+ * @param {object} props.tokenStoragePolicy option to store token in cookie, local or session storage
  * @returns {object} JSX of the component
  */
 export default function SignIn({
@@ -21,6 +22,7 @@ export default function SignIn({
   scope,
   signInResponse,
   getAccessToken,
+  tokenStoragePolicy,
 }) {
   const openAuthUrl = () => {
     const arr = new Uint8Array(4);
@@ -31,9 +33,35 @@ export default function SignIn({
     const timer = setInterval(() => {
       if (newWindow.closed) {
         clearInterval(timer);
-        const accessToken = getAccessToken();
+        getAccessToken().then((accessToken) => {
+          if (accessToken) {
+            if (Object.keys(tokenStoragePolicy).length !== 0) {
+              const {name, place, ttl} = tokenStoragePolicy;
 
-        signInResponse(clientID, accessToken || Error('No access token was returned'));
+              switch (place) {
+                case 'cookie': {
+                  const expiry = new Date();
+
+                  expiry.setSeconds(ttl);
+                  document.cookie = `${name}=${accessToken}; secure; expires=${expiry.toUTCString()}`;
+                  break;
+                }
+                case 'session':
+                  sessionStorage.setItem(name, accessToken);
+                  break;
+                case 'local':
+                  localStorage.setItem(name, accessToken);
+                  break;
+                default:
+                  break;
+              }
+            }
+          }
+          signInResponse(clientID, accessToken || Error('No access token was returned'));
+        })
+          .catch((err) => {
+            signInResponse(clientID, Error('Failed to fetch access token: ', err));
+          });
       }
     }, 500);
   };
@@ -58,10 +86,14 @@ SignIn.propTypes = {
   scope: PropTypes.string,
   signInResponse: PropTypes.func,
   getAccessToken: PropTypes.func,
+  tokenStoragePolicy: PropTypes.shape(
+    {place: PropTypes.string, name: PropTypes.string, ttl: PropTypes.number},
+  ),
 };
 
 SignIn.defaultProps = {
   scope: '',
   signInResponse: () => {},
   getAccessToken: () => {},
+  tokenStoragePolicy: {},
 };
