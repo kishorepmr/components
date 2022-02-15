@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import {Button} from '../generic';
+import Spinner from '../generic/Spinner/Spinner';
 
 /**
  * SignIn component performs OAuth 2.0 authentication.
@@ -24,12 +25,15 @@ export default function SignIn({
   getAccessToken,
   tokenStoragePolicy,
 }) {
+  const [isAuthenticating, setIsAuthenticating] = useState(false);
   const openAuthUrl = () => {
     const arr = new Uint8Array(4);
     const state = window.crypto.getRandomValues(arr);
     const fullAuthUrl = `${authUrl}?client_id=${clientID}&response_type=code&redirect_uri=${encodeURI(redirectUri)}${scope !== '' ? `&scope=${encodeURI(scope)}` : ''}&state=${state}`;
 
     const newWindow = window.open(fullAuthUrl, 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=400,height=700');
+
+    setIsAuthenticating(true);
     const timer = setInterval(() => {
       if (newWindow.closed) {
         clearInterval(timer);
@@ -62,19 +66,22 @@ export default function SignIn({
           .catch((err) => {
             signInResponse(clientID, Error('Failed to fetch access token: ', err));
           });
+        setIsAuthenticating(false);
       }
     }, 500);
   };
 
   return (
     <div className="sign-in-wrapper">
-      <Button
-        type="join"
-        size={40}
-        onClick={openAuthUrl}
-      >
-        Sign In
-      </Button>
+      {isAuthenticating ? <Spinner /> : (
+        <Button
+          type="join"
+          size={40}
+          onClick={openAuthUrl}
+        >
+          Sign In
+        </Button>
+      )}
     </div>
   );
 }
