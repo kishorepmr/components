@@ -1,4 +1,5 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
+import PropTypes from 'prop-types';
 import {
   InputField, OptionsList, Icon, Button,
 } from '../generic';
@@ -9,17 +10,18 @@ import Label from '../inputs/Label/Label';
 /**
  * Webex Add Collaborators component
  *
+ * @param {func} props.addedSpaceMembers cb function to return the people to be added
+ * in the space
  * @returns {object} JSX of component
  */
-export default function WebexAddCollaborators() {
+export default function WebexAddCollaborators({
+  addedSpaceMembers,
+}) {
   const [inputValue, setInputValue] = useState('');
   const [peopleSelected, setPeopleSelected] = useState([]);
   const [emailSelected, setEmailSelected] = useState([]);
   const [cssClasses, sc] = webexComponentClasses('add-collaborators');
   const searchList = useAddCollaborators(inputValue);
-
-  useEffect(() => {
-  }, [inputValue]);
 
   const handleOnChange = (value) => {
     setInputValue(value);
@@ -36,6 +38,7 @@ export default function WebexAddCollaborators() {
     const newPeopleSelected = peopleSelected.filter((key) => (getEmail(key) !== email));
 
     setPeopleSelected(newPeopleSelected);
+    addedSpaceMembers(newEmailSelected);
   };
 
   // add/remove people on list click
@@ -48,6 +51,7 @@ export default function WebexAddCollaborators() {
     } else {
       setEmailSelected([...emailSelected, email]);
       setPeopleSelected([...peopleSelected, item]);
+      addedSpaceMembers([...emailSelected, email]);
     }
   };
 
@@ -140,9 +144,14 @@ export default function WebexAddCollaborators() {
         <InputField
           placeholder={peopleSelected.length ? 'Add another' : 'Add people'}
           onChange={handleOnChange}
+          value={inputValue}
         />
       </div>
       {renderSuggestions()}
     </div>
   );
 }
+
+WebexAddCollaborators.propTypes = {
+  addedSpaceMembers: PropTypes.func.isRequired,
+};
