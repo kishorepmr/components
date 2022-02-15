@@ -36,4 +36,14 @@ export default {
     roomType: 'direct',
   },
   'room4-activities': [],
+  'test-widgets': {
+    id: '1',
+    title: 'test-widgets',
+    type: 'group',
+  },
+  widgets: {
+    id: '2',
+    title: 'widgets',
+    type: 'group',
+  },
 };

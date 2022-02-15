@@ -68,4 +68,22 @@ export default class MembershipJSONAdapter extends MembershipsAdapter {
       observer.complete();
     });
   }
+
+  /**
+   * Returns an observable that emits the response after
+   * members added to space
+   *
+   * @param {string} roomId
+   * @param {string} personalEmail
+   */
+  addMembersToSpace({roomId, personalEmail}) {
+    return new Observable((observer) => {
+      if (this.datasource[roomId]) {
+        observer.next({...this.datasource[roomId], personalEmail});
+      } else {
+        observer.error(new Error('Could not add members to room'));
+      }
+      observer.complete();
+    });
+  }
 }
