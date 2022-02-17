@@ -1,9 +1,9 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {acPropTypes, registerComponent} from '../Component/Component';
 import webexComponentClasses from '../../helpers';
 import Action from '../Action/Action';
-import AdaptiveCardContext from '../context/adaptive-card-context';
+import useActionSubmit from '../hooks/useActionSubmit';
 
 /**
  * Adaptive Cards Action.Submit component
@@ -17,33 +17,13 @@ import AdaptiveCardContext from '../context/adaptive-card-context';
  */
 export default function ActionSubmit({className, data, style}) {
   const [cssClasses] = webexComponentClasses('ac-action-submit', className);
-  const {
-    getAllValues,
-    validate,
-    submit,
-  } = useContext(AdaptiveCardContext);
-
-  const handleSubmit = () => {
-    if (data.associatedInputs?.toLowerCase() !== 'none') {
-      if (validate()) {
-        let values = getAllValues();
-
-        if (typeof data.data === 'object') {
-          values = {...values, ...data.data};
-        }
-        submit(values);
-      }
-    } else {
-      submit(data.data);
-    }
-  };
 
   return (
     <Action
       className={cssClasses}
       style={style}
       data={data}
-      onClick={handleSubmit}
+      onClick={useActionSubmit(data).onClick}
     />
   );
 }
@@ -59,20 +39,20 @@ ActionSubmit.defaultProps = {
   style: undefined,
 };
 
-Action.acPropTypes = {
+ActionSubmit.acPropTypes = {
   associatedInputs: acPropTypes.associatedInputs,
   data: acPropTypes.data,
+  fallback: acPropTypes.fallback,
   iconUrl: acPropTypes.iconUrl,
   id: acPropTypes.id,
   isEnabled: acPropTypes.isEnabled,
-  mode: acPropTypes.mode,
   style: acPropTypes.actionStyle,
   title: acPropTypes.title,
   tooltip: acPropTypes.tooltip,
   type: acPropTypes.type,
 };
 
-Action.acDefaultProps = {
+ActionSubmit.acDefaultProps = {
   associatedInputs: 'auto',
   style: 'default',
 };

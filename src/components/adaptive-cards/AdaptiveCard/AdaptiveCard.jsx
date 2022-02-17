@@ -4,6 +4,8 @@ import {Template} from 'adaptivecards-templating';
 import webexComponentClasses from '../../helpers';
 import AdaptiveCardContext from '../context/adaptive-card-context';
 import {mapValues} from '../../../util';
+import {formatDateTime} from '../util';
+import Markdown from '../Markdown/Markdown';
 
 import Component, {acPropTypes, registerComponent} from '../Component/Component';
 import '../ActionOpenURL/ActionOpenUrl';
@@ -32,38 +34,66 @@ import '../TextRun/TextRun';
  *
  * @param {object} props  React properties
  * @param {object} props.data  Active Cards definition
+ * @param {object} [props.action]  A set of attributes to apply when the component behaves as an action
  * @param {string} [props.className]  Custom CSS class to apply
+ * @param {object} props.inherited  Inherited data
  * @param {object} [props.style]  Custom style to apply
  * @returns {object} JSX of the component
  */
-function AdaptiveCardInternal({data, className, style}) {
+function AdaptiveCardInternal({
+  action, data, className, inherited, style,
+}) {
   const [cssClasses] = webexComponentClasses('adaptive-card', [className, 'wxc-ac-container--has-padding']);
+  let showFallbackText = false;
+
+  if (data.$schema && data.$schema !== 'http://adaptivecards.io/schemas/adaptive-card.json') {
+    console.warn('Unknown AdaptiveCard schema:', data.$schema);
+  }
+
+  if (data.version) {
+    const version = parseFloat(data.version);
+
+    if (!version) {
+      console.warn(`Invalid version ${data.version}`);
+    } else if (version > 1.2) {
+      console.warn(`Adaptive card requires version ${data.version}, this renderer only supports version 1.2`);
+      showFallbackText = true;
+    }
+  }
 
   return (
-    <div className={cssClasses} style={style}>
-      {/* eslint-disable react/no-array-index-key */}
-      {data.body?.map((item, index) => <Component data={item} key={index} />)}
-      {data.actions && <Component data={{type: 'ActionSet', actions: data.actions}} />}
+    <div className={cssClasses} {...action} style={style}>
+      {showFallbackText && <Markdown>{formatDateTime(data.fallbackText)}</Markdown>}
+      {data.body?.map((item, index) => <Component data={item} inherited={inherited} key={index} />)}
+      {data.actions && <Component data={{type: 'ActionSet', actions: data.actions}} inherited={inherited} />}
     </div>
   );
 }
 
 AdaptiveCardInternal.propTypes = {
+  action: PropTypes.shape(),
   data: PropTypes.shape().isRequired,
   className: PropTypes.string,
+  inherited: PropTypes.shape().isRequired,
   style: PropTypes.shape(),
 };
 
 AdaptiveCardInternal.defaultProps = {
+  action: undefined,
   className: undefined,
   style: undefined,
 };
 
 AdaptiveCardInternal.acPropTypes = {
+  actions: acPropTypes.actions,
+  backgroundImage: acPropTypes.backgroundImage,
   body: acPropTypes.children,
-  type: acPropTypes.type,
   minHeight: acPropTypes.minHeight,
   rtl: acPropTypes.rtl,
+  $schema: acPropTypes.$schema,
+  selectAction: acPropTypes.selectAction,
+  type: acPropTypes.type,
+  version: acPropTypes.version,
   verticalContentAlignment: acPropTypes.verticalContentAlignment,
 };
 
@@ -78,6 +108,7 @@ registerComponent('AdaptiveCard', AdaptiveCardInternal, 'vertical');
  * @param {string} [props.className]  Custom CSS class to apply
  * @param {object} [props.style]  Custom style to apply
  * @param {Function} [props.onSubmit]  Action to perform on submit
+ * @param {Function} [props.onInvalidSubmit]  Action to perform on invalid submit
  * @returns {object} JSX of the component
  */
 export default function AdaptiveCard({
@@ -86,11 +117,17 @@ export default function AdaptiveCard({
   className,
   style,
   onSubmit,
+  onInvalidSubmit,
 }) {
   const templateInstance = new Template(template);
   const data = templateInstance.expand({
     $root: context,
   });
+  const inherited = {};
+
+  if (!data.version) {
+    console.warn('AdaptiveCard missing version property');
+  }
 
   const [inputs, setInputs] = useState({});
   const [elements, setElements] = useState({});
@@ -120,7 +157,7 @@ export default function AdaptiveCard({
 
       return {
         ...prevInputs,
-        [id]: {...input, value},
+        [id]: {...input, value, error: undefined},
       };
     });
   };
@@ -135,18 +172,23 @@ export default function AdaptiveCard({
 
   const getError = (id) => inputs[id]?.error;
 
+  /**
+   * Validates input values, returns true if all are valid, false if any is invalid
+   *
+   * @returns {boolean} True if all values are valid
+   */
   const validate = () => {
     const newInputs = mapValues(inputs, (input) => {
       let error;
 
       if (input.isRequired && !input.value && input.value !== 0) {
-        error = input.errorMessage;
+        error = input.errorMessage || 'This field is required';
       } else if (input.value < input.min) {
         error = `Minimum value is ${input.min}`;
       } else if (input.value > input.max) {
         error = `Maximum value is ${input.max}`;
       } else if (input.regex && !String(input.value).match(input.regex)) {
-        error = input.errorMessage;
+        error = input.errorMessage || `The value you entered must match the pattern ${input.regex}`;
       } else if (String(input.value).length > input.maxLength) {
         error = `Maximum length is ${input.maxLength}`;
       }
@@ -156,10 +198,11 @@ export default function AdaptiveCard({
 
     setInputs(newInputs);
 
-    return Object.values(newInputs).some((input) => input.error);
+    return Object.values(newInputs).every((input) => !input.error);
   };
 
   const submit = (values) => onSubmit(values);
+  const invalidSubmit = (values) => onInvalidSubmit && onInvalidSubmit(values);
 
   return (
     <AdaptiveCardContext.Provider
@@ -171,12 +214,13 @@ export default function AdaptiveCard({
         getError,
         validate,
         submit,
+        invalidSubmit,
         setElement,
         setIsVisible,
         getIsVisible,
       }}
     >
-      <Component data={data} className={className} style={style} />
+      <Component data={data} className={className} inherited={inherited} style={style} />
     </AdaptiveCardContext.Provider>
   );
 }
@@ -187,6 +231,7 @@ AdaptiveCard.propTypes = {
   className: PropTypes.string,
   style: PropTypes.shape(),
   onSubmit: PropTypes.func,
+  onInvalidSubmit: PropTypes.func,
 };
 
 AdaptiveCard.defaultProps = {
@@ -194,4 +239,5 @@ AdaptiveCard.defaultProps = {
   context: undefined,
   style: undefined,
   onSubmit: undefined,
+  onInvalidSubmit: undefined,
 };

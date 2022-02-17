@@ -3,7 +3,7 @@
 exports[`Storyshots Meetings/Webex Settings Settings 1`] = `
 Array [
   <div
-    className="wxc-settings"
+    className="wxc wxc-settings"
     style={
       Object {
         "alignSelf": "stretch",
@@ -12,7 +12,7 @@ Array [
     }
   >
     <div
-      className="wxc-tabs"
+      className="wxc wxc-tabs"
     >
       <ul
         aria-label="Use left and right arrow keys to navigate."
@@ -52,30 +52,30 @@ Array [
         className="wxc-tabs__content"
       >
         <div
-          className="wxc-audio-settings"
+          className="wxc wxc-audio-settings"
         >
           <h5
-            className="wxc-title wxc-title--subsection"
+            className="wxc wxc-title wxc-title--subsection"
             style={Object {}}
           >
             Speaker
           </h5>
           <div
-            className="wxc-meeting-control"
+            className="wxc wxc-meeting-control"
           >
             <label
-              className="wxc-label wxc-select wxc-meeting-control__control-select"
+              className="wxc wxc-label wxc wxc-dropdown wxc-meeting-control__control-select"
             >
               <div
                 className="wxc-label__control"
               >
                 <div
-                  className="wxc-select__control"
+                  className="wxc-dropdown__control"
                   disabled={false}
                 >
                   <div
                     aria-label="Browser Default. Use arrow keys to navigate between speaker options and hit \\"Enter\\" to select."
-                    className="wxc-select__selected-option "
+                    className="wxc-dropdown__selected-option "
                     onClick={[Function]}
                     onKeyDown={[Function]}
                     role="button"
@@ -83,7 +83,7 @@ Array [
                     title="The current browser does not support changing speakers"
                   >
                     <span
-                      className="wxc-select__label"
+                      className="wxc-dropdown__label"
                     >
                       Browser Default
                     </span>
@@ -105,27 +105,27 @@ Array [
             </label>
           </div>
           <h5
-            className="wxc-title wxc-title--subsection"
+            className="wxc wxc-title wxc-title--subsection"
             style={Object {}}
           >
             Microphone
           </h5>
           <div
-            className="wxc-meeting-control"
+            className="wxc wxc-meeting-control"
           >
             <label
-              className="wxc-label wxc-select wxc-meeting-control__control-select wxc-select--disabled"
+              className="wxc wxc-label wxc wxc-dropdown wxc-meeting-control__control-select wxc-dropdown--disabled"
             >
               <div
                 className="wxc-label__control"
               >
                 <div
-                  className="wxc-select__control"
+                  className="wxc-dropdown__control"
                   disabled={true}
                 >
                   <div
                     aria-label="No available microphones. Use arrow keys to navigate between microphone options and hit \\"Enter\\" to select."
-                    className="wxc-select__selected-option "
+                    className="wxc-dropdown__selected-option "
                     onClick={[Function]}
                     onKeyDown={[Function]}
                     role="button"
@@ -133,7 +133,7 @@ Array [
                     title="Microphone Devices"
                   >
                     <span
-                      className="wxc-select__label"
+                      className="wxc-dropdown__label"
                     >
                       No available microphones
                     </span>

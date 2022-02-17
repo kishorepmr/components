@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import webexComponentClasses from '../../helpers';
 import {acPropTypes, registerComponent} from '../Component/Component';
+import {formatDateTime} from '../util';
+import Markdown from '../Markdown/Markdown';
 
 /**
  * Adaptive Cards TextBlock component
@@ -10,17 +12,20 @@ import {acPropTypes, registerComponent} from '../Component/Component';
  * @param {object} props  React props passed to the component
  * @param {object} props.data  Active cards definition
  * @param {string} [props.className]  Custom CSS class to apply
+ * @param {object} [props.style]  Custom style to apply
  * @returns {object} JSX of the component
  */
-export default function TextBlock({data, className}) {
-  const [cssClasses] = webexComponentClasses('adaptive-cards-text-block', className);
+export default function TextBlock({data, className, style}) {
+  const {maxLines} = data;
+  const [cssClasses] = webexComponentClasses('adaptive-cards-text-block', className, {'max-lines': maxLines});
 
   return (
     <div
       className={cssClasses}
+      style={{...style, WebkitLineClamp: data.maxLines}}
       role={data.style === 'heading' ? 'heading' : undefined}
     >
-      {data.text}
+      <Markdown>{formatDateTime(data.text)}</Markdown>
     </div>
   );
 }
@@ -28,10 +33,12 @@ export default function TextBlock({data, className}) {
 TextBlock.propTypes = {
   data: PropTypes.shape().isRequired,
   className: PropTypes.string,
+  style: PropTypes.shape(),
 };
 
 TextBlock.defaultProps = {
-  className: '',
+  className: undefined,
+  style: undefined,
 };
 
 TextBlock.acPropTypes = {
@@ -43,6 +50,7 @@ TextBlock.acPropTypes = {
   id: acPropTypes.id,
   isSubtle: acPropTypes.isSubtle,
   isVisible: acPropTypes.isVisible,
+  maxLines: acPropTypes.maxLines,
   separator: acPropTypes.separator,
   size: acPropTypes.size,
   spacing: acPropTypes.spacing,

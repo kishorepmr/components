@@ -10,19 +10,22 @@ import Component, {acPropTypes, registerComponent} from '../Component/Component'
  * @param {object} props  React props passed to the component
  * @param {object} props.data  Active cards definition
  * @param {string} [props.className]  Custom CSS class to apply
+ * @param {object} props.inherited  Inherited data
+ * @param {object} [props.style]  Custom style to apply
  * @returns {object} JSX of the component
  */
-export default function ImageSet({data, className}) {
+export default function ImageSet({
+  data, className, inherited, style,
+}) {
   const [cssClasses] = webexComponentClasses('adaptive-cards-image-set', className);
 
   return (
     <div className={cssClasses}>
-      {/* eslint-disable react/no-array-index-key */}
       {data.images.map((image, index) => {
         const itemData = {size: data.imageSize, ...image};
 
         return (
-          <Component data={itemData} key={index} />
+          <Component data={itemData} inherited={inherited} key={index} style={style} />
         );
       })}
     </div>
@@ -32,10 +35,13 @@ export default function ImageSet({data, className}) {
 ImageSet.propTypes = {
   data: PropTypes.shape().isRequired,
   className: PropTypes.string,
+  inherited: PropTypes.shape().isRequired,
+  style: PropTypes.shape(),
 };
 
 ImageSet.defaultProps = {
   className: '',
+  style: undefined,
 };
 
 ImageSet.acPropTypes = {

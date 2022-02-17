@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 import webexComponentClasses from '../../helpers';
 import {acPropTypes, registerComponent} from '../Component/Component';
 import AdaptiveCardContext from '../context/adaptive-card-context';
-import {Select} from '../../generic';
+import {Dropdown} from '../../inputs';
 import Checkbox from '../../inputs/Checkbox/Checkbox';
 import Label from '../../inputs/Label/Label';
 import RadioButton from '../../inputs/RadioButton/RadioButton';
+import {formatDateTime} from '../util';
 
 /**
  * Adaptive Cards InputChoiceSet component
@@ -22,7 +23,9 @@ export default function InputChoiceSet({
   data, className, style,
 }) {
   const [cssClasses] = webexComponentClasses('adaptive-cards-input-choice-set', className);
-  const {setValue, getValue, setInput} = useContext(AdaptiveCardContext);
+  const {
+    setValue, getValue, setInput, getError,
+  } = useContext(AdaptiveCardContext);
   const value = getValue(data.id);
   const values = value ? Object.fromEntries(String(value).split(',').map((v) => [v, true])) : {};
   let input;
@@ -37,8 +40,9 @@ export default function InputChoiceSet({
   };
 
   if (data.isMultiSelect === true || data.choices.length === 1) {
-    input = data.choices.map((choice) => (
+    input = data.choices.map((choice, index) => (
       <Checkbox
+        key={index}
         onChange={(isSelected) => onMultiChange(choice.value, isSelected)}
         selected={values[choice.value]}
         title={choice.title}
@@ -46,7 +50,7 @@ export default function InputChoiceSet({
     ));
   } else if (String(data.style).toLowerCase() === 'compact') {
     input = (
-      <Select
+      <Dropdown
         onChange={(option) => onSingleChange(option)}
         options={data.choices.map((choice) => ({label: choice.title, value: choice.value}))}
         placeholder={data.placeholder}
@@ -54,8 +58,9 @@ export default function InputChoiceSet({
       />
     );
   } else {
-    input = data.choices.map((choice) => (
+    input = data.choices.map((choice, index) => (
       <RadioButton
+        key={index}
         onChange={() => onSingleChange(choice.value)}
         selected={choice.value === value}
         title={choice.title}
@@ -81,9 +86,9 @@ export default function InputChoiceSet({
   return (
     <Label
       className={cssClasses}
-      error={data.error}
-      label={data.label}
-      required={data.required}
+      error={getError(data.id)}
+      label={formatDateTime(data.label)}
+      required={data.isRequired}
       style={style}
     >
       {input}
@@ -105,6 +110,7 @@ InputChoiceSet.defaultProps = {
 InputChoiceSet.acPropTypes = {
   choices: acPropTypes.children,
   errorMessage: acPropTypes.errorMessage,
+  fallback: acPropTypes.fallback,
   height: acPropTypes.height,
   id: acPropTypes.id,
   isMultiSelect: acPropTypes.isMultiSelect,

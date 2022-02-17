@@ -10,6 +10,7 @@ $C: #{$WEBEX_COMPONENTS_CLASS_PREFIX}-input-field;
   }
 
   .#{$C}__input {
+    font-family: #{$brand-font-regular};
     font-size: 1rem;
     line-height: 1.5rem;
     background: var(--wxc-input-field--normal--background);
@@ -18,7 +19,6 @@ $C: #{$WEBEX_COMPONENTS_CLASS_PREFIX}-input-field;
     border-radius: 0.5rem;
     padding: 0.1875rem 2.18rem 0.1875rem 0.75rem;
     width: 100%;
-    box-sizing: border-box;
 
     &[type="number"] {
       padding: 0.25rem 3.85rem 0.125rem 0.75rem;
@@ -116,7 +116,7 @@ $C: #{$WEBEX_COMPONENTS_CLASS_PREFIX}-input-field;
     right: 0.0625rem;
     top: 50%;
     transform: translateY(-50%);
-    width: 1.9375rem;
+    width: 2rem;
     height: calc(100% - 0.125rem);
 
   }
@@ -138,13 +138,6 @@ $C: #{$WEBEX_COMPONENTS_CLASS_PREFIX}-input-field;
       border: var(--wxc-input-field--active--border);
       color: var(--wxc-input-field--active--color);
       box-shadow: var(--wxc-input-field--active--box-shadow);
-    }
-
-    &:focus {
-      background: var(--wxc-input-field--focus--background);
-      border: var(--wxc-input-field--focus--border);
-      color: var(--wxc-input-field--focus--color);
-      box-shadow: var(--wxc-input-field--focus--box-shadow);
     }
 
     &:disabled {

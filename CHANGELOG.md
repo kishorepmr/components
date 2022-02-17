@@ -1,3 +1,189 @@
+# [1.250.0](https://github.com/webex/components/compare/v1.249.0...v1.250.0) (2022-02-17)
+
+
+### Features
+
+* **Dropdown:** [BREAKING CHANGE] rename Select component and move it in 'inputs' folder ([13d46f2](https://github.com/webex/components/commit/13d46f2e7f508b260f63e75bcce29e767566f7ca))
+
+# [1.249.0](https://github.com/webex/components/compare/v1.248.4...v1.249.0) (2022-02-16)
+
+
+### Features
+
+* **AdaptiveCard:** display fallback text if the version of the adaptive card is not supported ([dc7e135](https://github.com/webex/components/commit/dc7e135f930b9d9203db577b79ea17e92b04f955))
+
+## [1.248.4](https://github.com/webex/components/compare/v1.248.3...v1.248.4) (2022-02-16)
+
+
+### Bug Fixes
+
+* **components:** reset some css properties for webex components ([744b6ea](https://github.com/webex/components/commit/744b6eabfc2cfec5c815e99f438b3dccc5bea8ed))
+
+## [1.248.3](https://github.com/webex/components/compare/v1.248.2...v1.248.3) (2022-02-16)
+
+
+### Bug Fixes
+
+* **themes:** add color-scheme property to change theme for native components ([958ee41](https://github.com/webex/components/commit/958ee4194d046b934d60467ebe1ced25f61ff0e6))
+
+## [1.248.2](https://github.com/webex/components/compare/v1.248.1...v1.248.2) (2022-02-16)
+
+
+### Bug Fixes
+
+* **themes:** change color variables for InputField ([8115c01](https://github.com/webex/components/commit/8115c017f1ac3caca52c360f69adb804764fa352))
+
+## [1.248.1](https://github.com/webex/components/compare/v1.248.0...v1.248.1) (2022-02-15)
+
+
+### Bug Fixes
+
+* **WebexMeetingControl:** send pressed prop only if the control is of the toggle type ([be663ef](https://github.com/webex/components/commit/be663efc41f746f9c591e108566675a0d63d61e7))
+
+# [1.248.0](https://github.com/webex/components/compare/v1.247.0...v1.248.0) (2022-02-14)
+
+
+### Features
+
+* **AdaptiveCard:** add round border for adaptive card ([b09909a](https://github.com/webex/components/commit/b09909a309119e41a13cf63e0c2c7aa941738d0c))
+
+# [1.247.0](https://github.com/webex/components/compare/v1.246.3...v1.247.0) (2022-02-14)
+
+
+### Features
+
+* **Textbox:** allow custom height in multiline input text ([a6a57c8](https://github.com/webex/components/commit/a6a57c89790b91525f9930a3b2ffd4a01fff9d20))
+
+## [1.246.3](https://github.com/webex/components/compare/v1.246.2...v1.246.3) (2022-02-14)
+
+
+### Bug Fixes
+
+* **OptionsList:** prevent horizontal scrollbar ([1b30e0e](https://github.com/webex/components/commit/1b30e0e5d0b8a8b2191f4d545889bfc2cda2ff90))
+
+## [1.246.2](https://github.com/webex/components/compare/v1.246.1...v1.246.2) (2022-02-14)
+
+
+### Bug Fixes
+
+* **AdaptiveCard:** remove height property from adaptive card ([021b8ae](https://github.com/webex/components/commit/021b8aeded40755f31607459b82436c456a6f6ca))
+
+## [1.246.1](https://github.com/webex/components/compare/v1.246.0...v1.246.1) (2022-02-11)
+
+
+### Bug Fixes
+
+* **UseAdaptiveCard:** handle missing activity or card ([0ccd2cd](https://github.com/webex/components/commit/0ccd2cd1869bbc6f3a480f6d12d4d2bde3c45498))
+
+# [1.246.0](https://github.com/webex/components/compare/v1.245.0...v1.246.0) (2022-02-11)
+
+
+### Bug Fixes
+
+* **ActivitiesJsonAdapter:** correct the unit tests that failed on master ([3362575](https://github.com/webex/components/commit/33625755d1e05d4596de4fa3db8644dd530bc3b3))
+* **AdaptiveCardsInputNumber:** use the correct adaptive cards property for required (isRequired) ([6b1f95c](https://github.com/webex/components/commit/6b1f95cee3348d0bec9e42fe9cfb990a9f1b2b89))
+* **Markdown:** reset margins for p, ul, ol and remove <p> wrapper ([6d12213](https://github.com/webex/components/commit/6d12213ea87a550c1ae5ebf62bab618a3e6d58c4))
+* **preview-head:** set overflow property on root container ([4b598d3](https://github.com/webex/components/commit/4b598d356da5c0b1eb28aa1de0c0f369530e8faf))
+* **rollup:** use rollup plugin json in rollup config file ([074beb5](https://github.com/webex/components/commit/074beb5bc222a43fa007547b75dbcff85de99a54))
+* **Toggle:** move preventDefault function to be able to navigate with tab ([a2da33d](https://github.com/webex/components/commit/a2da33d5fbe7e7078b14ef91ff86510869b69b9f))
+
+
+### Features
+
+* **AdaptiveCard:** display a default error message for required and regex if missing ([acc3f35](https://github.com/webex/components/commit/acc3f353a4b03d73ca54aaf83f23dceee9f903fe))
+* **AdaptiveCard:** remove input error when user changes value ([3b12401](https://github.com/webex/components/commit/3b12401535232e0d1bc21cb7fb70e677bf58b0c2))
+* **AdaptiveCard:** show values on invalid submit only on storybook ([a2dfc9b](https://github.com/webex/components/commit/a2dfc9bc4d82af2e2b17159e6d933c4bf32769d3))
+* **AdaptiveCards:** implement selectAction property ([d8b61ad](https://github.com/webex/components/commit/d8b61ad86d007a565dc46c928c11e40ebbed86a3))
+* **AdaptiveCardsInputTime:** implement Input.Time component ([ac4dbe9](https://github.com/webex/components/commit/ac4dbe9717575608bb64296c2d391417519c2850))
+* **AdaptiveCardsTextBlock:** add markdown support ([e579f19](https://github.com/webex/components/commit/e579f19f7791c7b8e70af79fb2a63c0c5f90d7cd))
+* **InputDate:** implement Input.Date component ([669851a](https://github.com/webex/components/commit/669851a4da8ca81c626b8d08db626fd52bd7624a))
+* **TimeInput:** implement TimeInput component ([73d1605](https://github.com/webex/components/commit/73d1605665d92642e66c57335e6f4ca24ec56e6d))
+
+# [1.245.0](https://github.com/webex/components/compare/v1.244.0...v1.245.0) (2022-02-10)
+
+
+### Features
+
+* **AdaptiveCardsTextBlock:** implement maxLines property ([0178d1b](https://github.com/webex/components/commit/0178d1b60cefc8cfdfd7663c794e6fc1bb81fbbd))
+
+# [1.244.0](https://github.com/webex/components/compare/v1.243.0...v1.244.0) (2022-02-10)
+
+
+### Features
+
+* **ActivitiesJsonAdapter:** implement postActivity() method ([ab35212](https://github.com/webex/components/commit/ab352127af07067b12610f4fdb5d0ab8ec0f9206))
+* **AdaptiveCard:** implement date and time formatting ([1798062](https://github.com/webex/components/commit/179806217d51a722cfeaf8b4318257a70bcf280f))
+* **AdaptiveCardsInputToggle:** implement Input.Toggle component ([0563aa6](https://github.com/webex/components/commit/0563aa6b7840ea94cc902910c963d10e169407c3))
+* **DateInput:** implement DateInput component ([2b2d986](https://github.com/webex/components/commit/2b2d986e7c325443f8c9708a682bdfaf10c95151))
+
+# [1.243.0](https://github.com/webex/components/compare/v1.242.1...v1.243.0) (2022-02-08)
+
+
+### Bug Fixes
+
+* **InputChoiceSet:** add getError function ([c0699e8](https://github.com/webex/components/commit/c0699e8f5c0408b61006a37999f6b321246ec0d5))
+
+
+### Features
+
+* **WebexAdaptiveCard:** create WebexAdaptiveCard component ([7038ed1](https://github.com/webex/components/commit/7038ed13fba2fd93245a52b042631ccd7238a881))
+
+## [1.242.1](https://github.com/webex/components/compare/v1.242.0...v1.242.1) (2022-02-07)
+
+
+### Bug Fixes
+
+* **OptionsList:** prevent scroll on page when navigating with arrow keys between dropdown items ([f47abc7](https://github.com/webex/components/commit/f47abc74b0966462514d015f2737193762715c58))
+
+# [1.242.0](https://github.com/webex/components/compare/v1.241.0...v1.242.0) (2022-02-07)
+
+
+### Bug Fixes
+
+* **AdaptiveCard:** fix return value of the validate() function ([66d7c7e](https://github.com/webex/components/commit/66d7c7eba362135a66343f5d19f4648ed9d0a78a))
+* **AdaptiveCards:** add the missing ac prop types to each component ([34c939b](https://github.com/webex/components/commit/34c939badb983e9af114c2719d0b0642d21e125c))
+* **AdaptiveCards:** process AdaptiveCard  and version properties ([322730e](https://github.com/webex/components/commit/322730e8a7e78df08ea2a4876198c5b2e854cc6c))
+
+
+### Features
+
+* **OptionsList:** limit the height of dropdown options ([7a071a7](https://github.com/webex/components/commit/7a071a7f22b0578f91c745d5959cf5219a6a095d))
+
+# [1.241.0](https://github.com/webex/components/compare/v1.240.1...v1.241.0) (2022-02-07)
+
+
+### Features
+
+* **AdaptiveCardsComponent:** implement inherited verticalContentAlignment property ([7d04e01](https://github.com/webex/components/commit/7d04e01110065f31bae2c7af5240c6b65341cf97))
+
+## [1.240.1](https://github.com/webex/components/compare/v1.240.0...v1.240.1) (2022-02-03)
+
+
+### Bug Fixes
+
+* **InputTime:** display the missing hours and minutes ([8656d90](https://github.com/webex/components/commit/8656d908324338cb7d9fc008848fc0a51aeb72a6))
+
+# [1.240.0](https://github.com/webex/components/compare/v1.239.2...v1.240.0) (2022-02-03)
+
+
+### Features
+
+* **ActivitiesJsonAdapter:** implement postAction() and use it in useActivity hook ([52a1603](https://github.com/webex/components/commit/52a1603356aeafe41284d944ef1ce73eb9ea467f))
+
+## [1.239.2](https://github.com/webex/components/compare/v1.239.1...v1.239.2) (2022-02-03)
+
+
+### Bug Fixes
+
+* **InputField:** remove focus on the increment controls after click ([2ecca21](https://github.com/webex/components/commit/2ecca21006f58e0593239a92ba91b5ea92d30bd3))
+
+## [1.239.1](https://github.com/webex/components/compare/v1.239.0...v1.239.1) (2022-02-03)
+
+
+### Bug Fixes
+
+* **AdaptiveCardsActionSet:** add margin bottom to ActionSet ([6f2b63c](https://github.com/webex/components/commit/6f2b63c2686b20fa5ce3b6452b8278ec6f5226d4))
+
 # [1.239.0](https://github.com/webex/components/compare/v1.238.0...v1.239.0) (2022-01-31)
 
 
