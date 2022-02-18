@@ -1,8 +1,9 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import PropTypes from 'prop-types';
 import {InputField, Button} from '../generic';
 import webexComponentClasses from '../helpers';
 import WebexAddCollaborators from '../WebexAddCollaborators/WebexAddCollaborators';
+import {AdapterContext} from '../hooks/contexts';
 
 /**
  * Webex Create Space Component
@@ -24,21 +25,61 @@ export default function WebexCreateSpace({
 }) {
   const [spaceTitle, setSpaceTitle] = useState(spaceName);
   const [cssClasses, sc] = webexComponentClasses('create-space');
+  const [addedSpaceMembers, setAddedSpaceMembers] = useState([]);
+  const [alertMsg, setAlertMsg] = useState('');
+  const adapter = useContext(AdapterContext);
+
+  const handleCancel = () => {
+    setSpaceTitle('');
+    setAlertMsg('');
+  };
+
+  const showBanner = (isError, msg) => {
+    const bannerData = (
+      <span className={isError ? sc('error') : sc('success')}>
+        {msg}
+      </span>
+    );
+
+    setAlertMsg(bannerData);
+  };
 
   const handleSpaceName = (name) => {
     setSpaceTitle(name);
   };
 
+  const onError = (error) => {
+    showBanner(true, error.message);
+  };
+
+  const addMembersSuccess = () => {
+    showBanner(false, 'space created successfully');
+    createSpaceResponse(null, {data: {spaceTitle, addedSpaceMembers}, msg: 'space created successfully'});
+  };
+
+  const createRoomSuccess = (data) => {
+    addedSpaceMembers.forEach((email) => {
+      adapter.membershipsAdapter.addMembersToSpace({roomId: data.id, personalEmail: email})
+        .subscribe(addMembersSuccess, onError);
+    });
+  };
+
   const handleCreateSpace = () => {
     if (createSpace) {
-      if (accessToken) {
-        createSpaceResponse(null, {msg: 'space created successfuly'});
+      if (accessToken && spaceTitle) {
+        adapter.roomsAdapter.createRoom(spaceTitle).subscribe(createRoomSuccess, onError);
       } else {
-        createSpaceResponse({error: 'access token not found'});
+        showBanner(true, 'access token or space name is missing');
+        createSpaceResponse({error: 'access token or space name is missing'});
       }
     } else {
-      createSpaceResponse({error: 'create space not allowed'});
+      createSpaceResponse(null, {data: {spaceTitle, addedSpaceMembers}});
+      handleCancel();
     }
+  };
+
+  const handleAddedSpaceMembers = (members) => {
+    setAddedSpaceMembers(members);
   };
 
   return (
@@ -49,11 +90,14 @@ export default function WebexCreateSpace({
         onChange={handleSpaceName}
         value={spaceTitle}
       />
-      <WebexAddCollaborators />
+      <WebexAddCollaborators
+        addedSpaceMembers={handleAddedSpaceMembers}
+      />
+      {alertMsg}
       <div className={sc('buttons')}>
         <Button
           type="primary"
-          onClick={() => {}}
+          onClick={handleCancel}
         >
           Cancel
         </Button>
