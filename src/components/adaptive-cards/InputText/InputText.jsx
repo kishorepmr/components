@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import webexComponentClasses from '../../helpers';
 import AdaptiveCardContext from '../context/adaptive-card-context';
 import {acPropTypes, registerComponent} from '../Component/Component';
-import InputField from '../../generic/InputField/InputField';
+import TextInput from '../../inputs/TextInput/TextInput';
 import Textbox from '../../inputs/Textbox/Textbox';
+import {formatDateTime} from '../util';
 
 /**
  * Adaptive Cards Input.Text component
@@ -46,10 +47,10 @@ export default function InputText({data, className, style}) {
 
   return (
     !data.isMultiline ? (
-      <InputField
+      <TextInput
         className={cssClasses}
         error={getError(data.id)}
-        label={data.label}
+        label={formatDateTime(data.label)}
         maxLength={data.maxLength}
         onChange={(value) => setValue(data.id, value)}
         pattern={data.regex}
@@ -63,7 +64,7 @@ export default function InputText({data, className, style}) {
       <Textbox
         className={cssClasses}
         error={getError(data.id)}
-        label={data.label}
+        label={formatDateTime(data.label)}
         maxLength={data.maxLength}
         onChange={(value) => setValue(data.id, value)}
         placeholder={data.placeholder}
@@ -91,6 +92,7 @@ InputText.acPropTypes = {
   fallback: acPropTypes.fallback,
   height: acPropTypes.height,
   id: acPropTypes.id,
+  isMultiline: acPropTypes.isMultiline,
   isRequired: acPropTypes.isRequired,
   isVisible: acPropTypes.isVisible,
   label: acPropTypes.label,

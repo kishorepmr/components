@@ -81,6 +81,8 @@
     "lines-around-directive": "error",
     "no-useless-call": "error",
     "operator-linebreak": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/no-array-index-key": "off",
     "jsx-a11y/tabindex-no-positive": "off"
   },
   "overrides": [

@@ -63,4 +63,186 @@ export default {
     created: 'August 5, 2020 11:08:00',
     displayHeader: true,
   },
+  activity9: {
+    ID: 'activity9',
+    roomID: 'room1',
+    text: 'Adaptive card activity',
+    personID: 'user3',
+    created: 'February 1, 2022 13:00:00',
+    displayHeader: true,
+    attachments: [
+      {
+        contentType: 'application/vnd.microsoft.card.adaptive',
+        content: {
+          $schema: 'http://adaptivecards.io/schemas/adaptive-card.json',
+          type: 'AdaptiveCard',
+          version: '1.2',
+          body: [
+            {
+              type: 'TextBlock',
+              text: 'Hotel Booking',
+              size: 'large',
+            },
+            {
+              type: 'Container',
+              separator: true,
+              spacing: 'medium',
+              items: [
+                {
+                  type: 'ColumnSet',
+                  columns: [
+                    {
+                      type: 'Input.Text',
+                      id: 'firstName',
+                      style: 'text',
+                      height: 'auto',
+                      isRequired: true,
+                      errorMessage: 'First Name is required',
+                      label: 'First Name',
+                    },
+                    {
+                      type: 'Input.Text',
+                      id: 'lastName',
+                      style: 'text',
+                      height: 'auto',
+                      isRequired: true,
+                      errorMessage: 'Last Name is required',
+                      label: 'Last Name',
+                    },
+                  ],
+                },
+                {
+                  type: 'Input.Text',
+                  id: 'myEmail',
+                  style: 'email',
+                  height: 'auto',
+                  isRequired: true,
+                  errorMessage: 'Email is required',
+                  label: 'Email',
+                },
+              ],
+            },
+            {
+              type: 'Input.ChoiceSet',
+              id: 'roomType',
+              style: 'compact',
+              isMultiSelect: false,
+              label: 'Room type',
+              isRequired: true,
+              errorMessage: 'Required input',
+              placeholder: 'Please select the room type',
+              choices: [
+                {
+                  title: 'Standard Room (1 to 2 People)',
+                  value: '1',
+                },
+                {
+                  title: 'Family Room (1 to 4 Peole)',
+                  value: '2',
+                },
+                {
+                  title: 'Private Room (1 to 3 Peole)',
+                  value: '3',
+                },
+              ],
+            },
+            {
+              type: 'Input.Number',
+              id: 'numberOfGuests',
+              placeholder: 'Please select the number of guests',
+              label: 'Number of Guests',
+              isRequired: true,
+              min: 1,
+              max: 10,
+              value: 0,
+            },
+            {
+              type: 'ColumnSet',
+              columns: [
+                {
+                  type: 'Input.Text',
+                  id: 'arrivalDate',
+                  style: 'text',
+                  height: 'auto',
+                  isRequired: true,
+                  errorMessage: 'Arrival Date is required',
+                  label: 'Arrival Date',
+                },
+                {
+                  type: 'Input.Time',
+                  id: 'arrivalTime',
+                  label: 'Arrival Time',
+                  isRequired: true,
+                  min: '10:00',
+                  max: '23:59',
+                  value: '10:00',
+                },
+              ],
+            },
+            {
+              type: 'Input.Text',
+              id: 'departureDate',
+              style: 'text',
+              height: 'auto',
+              isRequired: true,
+              errorMessage: 'This is a required input',
+              label: 'Departure Date',
+            },
+            {
+              type: 'Input.ChoiceSet',
+              id: 'pickUp',
+              style: 'expanded',
+              spacing: 'medium',
+              isMultiSelect: false,
+              label: 'Free pickup?',
+              isRequired: true,
+              errorMessage: 'Pick up option on arrival',
+              choices: [
+                {
+                  title: 'Yes Please! - Pick me up on arrival',
+                  value: '1',
+                },
+                {
+                  title: 'No Thanks - I will make my own way there',
+                  value: '2',
+                },
+              ],
+            },
+          ],
+          actions: [
+            {
+              type: 'Action.Submit',
+              title: 'Submit',
+            },
+          ],
+        },
+      },
+    ],
+    actions: [
+      {
+        actionID: 'action-activity9-1',
+        personID: 'user1',
+        roomID: 'room1',
+        type: 'submit',
+        activityID: 'activity9',
+        inputs: {
+          firstName: 'Barbara',
+          lastName: 'German',
+        },
+        created: 'February 2, 2022 13:00:00',
+      },
+      {
+        actionID: 'action-activity9-2',
+        personID: 'user1',
+        roomID: 'room1',
+        type: 'submit',
+        activityID: 'activity9',
+        inputs: {
+          firstName: 'Giacomo',
+          lastName: 'Edwards',
+        },
+        created: 'February 1, 2022 14:00:00',
+      },
+    ],
+  },
 };
