@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext, useRef} from 'react';
 import PropTypes from 'prop-types';
 import {InputField, Button} from '../generic';
 import webexComponentClasses from '../helpers';
@@ -28,10 +28,12 @@ export default function WebexCreateSpace({
   const [addedSpaceMembers, setAddedSpaceMembers] = useState([]);
   const [alertMsg, setAlertMsg] = useState('');
   const adapter = useContext(AdapterContext);
+  const addCollaboratorsRef = useRef();
 
   const handleCancel = () => {
     setSpaceTitle('');
     setAlertMsg('');
+    addCollaboratorsRef.current.clearInput();
   };
 
   const showBanner = (isError, msg) => {
@@ -54,7 +56,9 @@ export default function WebexCreateSpace({
 
   const addMembersSuccess = () => {
     showBanner(false, 'space created successfully');
-    createSpaceResponse(null, {data: {spaceTitle, addedSpaceMembers}, msg: 'space created successfully'});
+    if (createSpaceResponse) {
+      createSpaceResponse(null, {data: {spaceTitle, addedSpaceMembers}, msg: 'space created successfully'});
+    }
   };
 
   const createRoomSuccess = (data) => {
@@ -70,10 +74,10 @@ export default function WebexCreateSpace({
         adapter.roomsAdapter.createRoom(spaceTitle).subscribe(createRoomSuccess, onError);
       } else {
         showBanner(true, 'access token or space name is missing');
-        createSpaceResponse({error: 'access token or space name is missing'});
+        if (createSpaceResponse) createSpaceResponse({error: 'access token or space name is missing'});
       }
     } else {
-      createSpaceResponse(null, {data: {spaceTitle, addedSpaceMembers}});
+      if (createSpaceResponse) createSpaceResponse(null, {data: {spaceTitle, addedSpaceMembers}});
       handleCancel();
     }
   };
@@ -92,6 +96,7 @@ export default function WebexCreateSpace({
       />
       <WebexAddCollaborators
         addedSpaceMembers={handleAddedSpaceMembers}
+        ref={addCollaboratorsRef}
       />
       {alertMsg}
       <div className={sc('buttons')}>
