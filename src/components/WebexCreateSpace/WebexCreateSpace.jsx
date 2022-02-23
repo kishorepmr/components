@@ -126,6 +126,6 @@ WebexCreateSpace.propTypes = {
 
 WebexCreateSpace.defaultProps = {
   spaceName: '',
-  createSpace: '',
+  createSpace: PropTypes.bool,
   createSpaceResponse: undefined,
 };
