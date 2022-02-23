@@ -9,30 +9,36 @@ import Component, {acPropTypes, registerComponent} from '../Component/Component'
  *
  * @param {object} props  React props passed to the component
  * @param {object} props.data  Active cards definition
+ * @param {object} [props.action]  A set of attributes to apply when the component behaves as an action
  * @param {string} [props.className]  Custom CSS class to apply
+ * @param {object} props.inherited  Inherited data
  * @param {object} [props.style]  Custom style to apply
  * @returns {object} JSX of the component
  */
-export default function Container({data, className, style}) {
+export default function Container({
+  action, data, className, inherited, style,
+}) {
   const [cssClasses] = webexComponentClasses('container', className);
 
   return (
-    <div className={cssClasses} style={style}>
-      {/* eslint-disable react/no-array-index-key */}
+    <div className={cssClasses} {...action} style={style}>
       {data.items?.map((item, index) => (
-        <Component data={item} key={index} />
+        <Component data={item} inherited={inherited} key={index} />
       ))}
     </div>
   );
 }
 
 Container.propTypes = {
+  action: PropTypes.shape(),
   data: PropTypes.shape().isRequired,
   className: PropTypes.string,
+  inherited: PropTypes.shape().isRequired,
   style: PropTypes.shape(),
 };
 
 Container.defaultProps = {
+  action: undefined,
   className: '',
   style: undefined,
 };
@@ -47,6 +53,7 @@ Container.acPropTypes = {
   items: acPropTypes.children,
   minHeight: acPropTypes.minHeight,
   rtl: acPropTypes.rtl,
+  selectAction: acPropTypes.selectAction,
   separator: acPropTypes.separator,
   spacing: acPropTypes.spacing,
   style: acPropTypes.containerStyle,

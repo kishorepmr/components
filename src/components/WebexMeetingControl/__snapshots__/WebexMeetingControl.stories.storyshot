@@ -3,12 +3,12 @@
 exports[`Storyshots Meetings/Webex Meeting Control Active Icon 1`] = `
 Array [
   <div
-    className="wxc-meeting-control"
+    className="wxc wxc-meeting-control"
   >
     <button
       aria-label="Unmute"
       autoFocus={false}
-      className="wxc-button wxc-meeting-control__control-button wxc-button--default wxc-button--pressed"
+      className="wxc wxc-button wxc-meeting-control__control-button wxc-button--default"
       disabled={false}
       onClick={[Function]}
       style={
@@ -20,7 +20,7 @@ Array [
       type="button"
     >
       <svg
-        className="wxc-icon wxc-audio-microphone-muted-icon"
+        className="wxc-icon wxc wxc-audio-microphone-muted-icon"
         height={24}
         style={Object {}}
         viewBox="0 0 24 24"
@@ -67,11 +67,11 @@ Array [
 exports[`Storyshots Meetings/Webex Meeting Control Disabled Icon 1`] = `
 Array [
   <div
-    className="wxc-meeting-control"
+    className="wxc wxc-meeting-control"
   >
     <button
       autoFocus={false}
-      className="wxc-button wxc-meeting-control__control-button wxc-button--default"
+      className="wxc wxc-button wxc-meeting-control__control-button wxc-button--default"
       disabled={true}
       onClick={[Function]}
       style={
@@ -83,7 +83,7 @@ Array [
       type="button"
     >
       <svg
-        className="wxc-icon wxc-audio-microphone-icon"
+        className="wxc-icon wxc wxc-audio-microphone-icon"
         height={24}
         style={Object {}}
         viewBox="0 0 24 24"
@@ -134,12 +134,12 @@ Array [
 exports[`Storyshots Meetings/Webex Meeting Control Disabled Text 1`] = `
 Array [
   <div
-    className="wxc-meeting-control"
+    className="wxc wxc-meeting-control"
   >
     <button
       aria-label="Join meeting"
       autoFocus={false}
-      className="wxc-button wxc-meeting-control__control-button wxc-button--join"
+      className="wxc wxc-button wxc-meeting-control__control-button wxc-button--join"
       disabled={true}
       onClick={[Function]}
       style={
@@ -184,21 +184,21 @@ Array [
 exports[`Storyshots Meetings/Webex Meeting Control Dropdown 1`] = `
 Array [
   <div
-    className="wxc-meeting-control"
+    className="wxc wxc-meeting-control"
   >
     <label
-      className="wxc-label wxc-select wxc-meeting-control__control-select wxc-select--disabled"
+      className="wxc wxc-label wxc wxc-dropdown wxc-meeting-control__control-select wxc-dropdown--disabled"
     >
       <div
         className="wxc-label__control"
       >
         <div
-          className="wxc-select__control"
+          className="wxc-dropdown__control"
           disabled={true}
         >
           <div
             aria-label="No available cameras. Use arrow keys to navigate between camera options and hit \\"Enter\\" to select."
-            className="wxc-select__selected-option "
+            className="wxc-dropdown__selected-option "
             onClick={[Function]}
             onKeyDown={[Function]}
             role="button"
@@ -206,7 +206,7 @@ Array [
             title="Video Devices"
           >
             <span
-              className="wxc-select__label"
+              className="wxc-dropdown__label"
             >
               No available cameras
             </span>
@@ -253,12 +253,12 @@ Array [
 exports[`Storyshots Meetings/Webex Meeting Control Inactive Icon 1`] = `
 Array [
   <div
-    className="wxc-meeting-control"
+    className="wxc wxc-meeting-control"
   >
     <button
       aria-label="Unmute"
       autoFocus={false}
-      className="wxc-button wxc-meeting-control__control-button wxc-button--default wxc-button--pressed"
+      className="wxc wxc-button wxc-meeting-control__control-button wxc-button--default"
       disabled={false}
       onClick={[Function]}
       style={
@@ -270,7 +270,7 @@ Array [
       type="button"
     >
       <svg
-        className="wxc-icon wxc-audio-microphone-muted-icon"
+        className="wxc-icon wxc wxc-audio-microphone-muted-icon"
         height={24}
         style={Object {}}
         viewBox="0 0 24 24"
@@ -317,12 +317,12 @@ Array [
 exports[`Storyshots Meetings/Webex Meeting Control Text 1`] = `
 Array [
   <div
-    className="wxc-meeting-control"
+    className="wxc wxc-meeting-control"
   >
     <button
       aria-label="Join meeting. Muted, video off"
       autoFocus={false}
-      className="wxc-button wxc-meeting-control__control-button wxc-button--join wxc-button--pressed"
+      className="wxc wxc-button wxc-meeting-control__control-button wxc-button--join"
       disabled={false}
       onClick={[Function]}
       style={

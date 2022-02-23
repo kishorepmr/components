@@ -1,7 +1,8 @@
 import React, {useState, useContext} from 'react';
 import PropTypes from 'prop-types';
 import webexComponentClasses from '../helpers';
-import {Button, InputField} from '../generic';
+import {Button} from '../generic';
+import {PasswordInput, TextInput} from '../inputs';
 import {PHONE_LARGE} from '../breakpoints';
 import {useElementDimensions, useMeeting, useRef} from '../hooks';
 import {AdapterContext} from '../hooks/contexts';
@@ -88,22 +89,19 @@ export default function WebexMeetingGuestAuthentication({
         <div className={sc('title')} title={title}>{title}</div>
       </div>
       <form className={sc('form-content')}>
-        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-        <InputField
+        <TextInput
+          ariaLabel={HINTS.name}
+          autoFocus
           className={sc('input')}
-          type="text"
-          name="name"
-          value={name}
-          onChange={handleNameChange}
           disabled={isJoining}
           error={nameError}
           label="Your name"
-          ariaLabel={HINTS.name}
-          autoFocus
+          name="name"
+          onChange={handleNameChange}
           tabIndex={101}
+          value={name}
         />
-        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-        <InputField
+        <PasswordInput
           className={sc('input')}
           type="password"
           name="password"
@@ -124,7 +122,7 @@ export default function WebexMeetingGuestAuthentication({
           ariaLabel={HINTS.buttonHint}
           tabIndex={103}
         >
-          {isJoining && <Spinner className={sc('start-button-spinner')} size={16} />}
+          {isJoining && <Spinner className={sc('start-button-spinner')} size={18} />}
           {isJoining ? 'Starting meeting...' : 'Start meeting'}
         </Button>
       </form>

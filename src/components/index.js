@@ -1,6 +1,7 @@
 export {default as WebexAvatar} from './WebexAvatar/WebexAvatar';
 export {default as WebexActivity} from './WebexActivity/WebexActivity';
 export {default as WebexActivityStream} from './WebexActivityStream/WebexActivityStream';
+export {default as WebexAdaptiveCard} from './WebexAdaptiveCard/WebexAdaptiveCard';
 export {default as WebexDataProvider} from './WebexDataProvider/WebexDataProvider';
 export {default as WebexInMeeting} from './WebexInMeeting/WebexInMeeting';
 export {default as WebexInterstitialMeeting} from './WebexInterstitialMeeting/WebexInterstitialMeeting';
@@ -22,5 +23,7 @@ export {default as withMeeting} from './hoc/withMeeting';
 export {default as withAdapter} from './hoc/withAdapter';
 export {default as Button} from './generic/Button/Button';
 export {default as Modal} from './generic/Modal/Modal';
+export {default as WebexCreateSpace} from './WebexCreateSpace/WebexCreateSpace';
+export {default as WebexAddCollaborators} from './WebexAddCollaborators/WebexAddCollaborators';
 
 global.testRendererAct = (fn) => fn();

@@ -3,23 +3,26 @@ import PropTypes from 'prop-types';
 import webexComponentClasses from '../../helpers';
 import AdaptiveCardContext from '../context/adaptive-card-context';
 import Spacer from '../Spacer/Spacer';
+import useAction from '../hooks/useAction';
 
 const componentTypes = {};
 const containerTypes = {};
 
 export const acPropTypes = {
-  action: 'action',
+  actions: 'actions',
   actionStyle: 'action-style',
+  altText: 'alt-text',
   associatedInputs: 'associated-inputs',
+  backgroundColor: 'background-color',
   backgroundImage: 'background-image',
   bleed: 'bleed',
+  card: 'card',
   children: 'children',
   color: 'color',
   containerStyle: 'container-style',
   data: 'data',
   defaultImageSize: 'default-image-size',
   errorMessage: 'error-message',
-  fallback: 'fallback',
   fontType: 'font-type',
   height: 'height',
   highlight: 'highlight',
@@ -30,6 +33,7 @@ export const acPropTypes = {
   imageStyle: 'image-style',
   inputStyle: 'input-style',
   isEnabled: 'is-enabled',
+  isMultiline: 'is-multi-line',
   isMultiSelect: 'is-multi-select',
   isRequired: 'is-required',
   isSubtle: 'is-subtle',
@@ -37,13 +41,15 @@ export const acPropTypes = {
   italic: 'italic',
   label: 'label',
   maxLength: 'max-length',
+  maxLines: 'max-lines',
   maxValue: 'max-value',
   minHeight: 'min-height',
   minValue: 'min-value',
-  mode: 'mode',
   placeholder: 'placeholder',
   regex: 'regex',
   rtl: 'rtl',
+  $schema: '$schema',
+  selectAction: 'select-action',
   separator: 'separator',
   size: 'size',
   spacing: 'spacing',
@@ -57,6 +63,9 @@ export const acPropTypes = {
   underline: 'underline',
   url: 'url',
   value: 'value',
+  valueOff: 'value-off',
+  valueOn: 'value-on',
+  version: 'version',
   verticalContentAlignment: 'vertical-content-alignment',
   weight: 'weight',
   width: 'width',
@@ -100,6 +109,10 @@ UnknownComponent.defaultProps = {
   data: undefined,
 };
 
+UnknownComponent.acPropTypes = {
+  type: acPropTypes.type,
+};
+
 /**
  * Component generic component
  *
@@ -107,11 +120,12 @@ UnknownComponent.defaultProps = {
  * @param {object} props.data  Active Cards definition
  * @param {string} [props.className]  Custom CSS class to apply
  * @param {object} [props.style]  Custom style to apply
+ * @param {object} props.inherited  Inherited properties
  * @param {object} [otherProps]  Other props that must be passed from a parent AC component to a child
  * @returns {object} JSX of the component
  */
 export default function Component({
-  data, className, style: styleProp, ...otherProps
+  data, className, style: styleProp, inherited, ...otherProps
 }) {
   const {setElement, getIsVisible} = useContext(AdaptiveCardContext);
 
@@ -130,45 +144,69 @@ export default function Component({
   const fallback = data.fallback !== 'drop' && componentTypes[data.fallback];
   const C = componentTypes[data.type] || fallback || UnknownComponent;
   const classes = [];
-  const getClass = (propType, value) => (value ? `wxc-ac-${propType}--${String(value).toLowerCase()}` : '');
+  const getClass = (propType, value) => (value !== undefined ? `wxc-ac-${propType}--${String(value).toLowerCase()}` : `wxc-ac-${propType}`);
   const style = {};
+  const action = useAction(data.selectAction);
+  let myInherited = {}; // inherited props that apply to this component
+  let childrenInherited = inherited; // inherited props for this component's children
 
-  const dataWithDefaults = {...C.acDefaultProps, ...data};
+  // handle inherited props
+  for (const prop of ['fallback', 'verticalContentAlignment']) {
+    const propType = (C.acPropTypes && C.acPropTypes[prop]) || undefined;
+
+    if (propType) {
+      if (data[prop] !== undefined) {
+        childrenInherited = {...childrenInherited, [prop]: data[prop]};
+      } else if (inherited[prop] !== undefined) {
+        myInherited = {...myInherited, [prop]: inherited[prop]};
+      }
+    }
+  }
+
+  const dataWithDefaults = {...C.acDefaultProps, ...myInherited, ...data};
 
   for (const [prop, value] of Object.entries(dataWithDefaults)) {
     const propType = (C.acPropTypes && C.acPropTypes[prop]) || undefined;
 
     switch (propType) {
       case undefined:
-        console.log('[Component]', 'Unknown property', prop);
+        console.log(`[${data.type}]`, 'Unknown property', prop);
         break;
-      case acPropTypes.action:
+      case acPropTypes.actions:
+      case acPropTypes.altText:
       case acPropTypes.associatedInputs:
+      case acPropTypes.backgroundColor:
+      case acPropTypes.card:
       case acPropTypes.children:
       case acPropTypes.data:
       case acPropTypes.defaultImageSize:
       case acPropTypes.errorMessage:
-      case acPropTypes.fallback:
       case acPropTypes.iconUrl:
       case acPropTypes.id:
       case acPropTypes.label:
       case acPropTypes.maxLength:
+      case acPropTypes.maxLines:
       case acPropTypes.maxValue:
       case acPropTypes.minValue:
-      case acPropTypes.mode:
       case acPropTypes.placeholder:
       case acPropTypes.regex:
+      case acPropTypes.$schema:
       case acPropTypes.separator:
       case acPropTypes.spacing:
       case acPropTypes.style:
+      case acPropTypes.isMultiline:
       case acPropTypes.isMultiSelect:
       case acPropTypes.isRequired:
       case acPropTypes.targetElements:
       case acPropTypes.text:
       case acPropTypes.tooltip:
+      case acPropTypes.title:
       case acPropTypes.type:
       case acPropTypes.url:
       case acPropTypes.value:
+      case acPropTypes.version:
+      case acPropTypes.valueOff:
+      case acPropTypes.valueOn:
         break;
       case acPropTypes.containerStyle:
         classes.push(getClass(propType, value));
@@ -207,7 +245,10 @@ export default function Component({
         }
         break;
       case acPropTypes.isVisible:
-        classes.push(getClass(propType, getIsVisible(data.id).toString()));
+        classes.push(getClass(propType, getIsVisible(data.id)));
+        break;
+      case acPropTypes.selectAction:
+        classes.push(getClass(propType));
         break;
       default:
         classes.push(getClass(propType, value));
@@ -222,8 +263,10 @@ export default function Component({
   }
 
   const props = {
-    data,
+    action: action && {...action, tabIndex: 0},
     className: `${cssClasses} ${classes.join(' ')}`,
+    data: {...dataWithDefaults},
+    inherited: childrenInherited,
     style: {...style, ...styleProp},
     ...otherProps,
   };
@@ -238,7 +281,6 @@ export default function Component({
   return (
     <>
       {spacer}
-      {/* eslint-disable-next-line react/jsx-props-no-spreading */}
       <C {...props} />
     </>
   );
@@ -247,6 +289,7 @@ export default function Component({
 Component.propTypes = {
   data: PropTypes.shape().isRequired,
   className: PropTypes.string,
+  inherited: PropTypes.shape().isRequired,
   style: PropTypes.shape(),
   otherProps: PropTypes.shape(),
 };

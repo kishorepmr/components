@@ -1,6 +1,6 @@
 {
   "name": "@webex/components",
-  "version": "1.239.0",
+  "version": "1.253.0",
   "browser": "dist/umd/webex-components.umd.min.js",
   "unpkg": "dist/umd/webex-components.umd.min.js",
   "module": "dist/es/webex-components.es.min.js",
@@ -46,6 +46,7 @@
     "classnames": "^2.2.6",
     "date-fns": "^2.15.0",
     "logform": "^2.2.0",
+    "markdown-it": "^12.3.2",
     "winston": "^3.3.3"
   },
   "devDependencies": {
@@ -57,6 +58,7 @@
     "@commitlint/config-conventional": "^9.1.1",
     "@rollup/plugin-babel": "^5.2.0",
     "@rollup/plugin-commonjs": "^15.0.0",
+    "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^9.0.0",
     "@semantic-release/changelog": "^6.0.0",
     "@semantic-release/git": "^10.0.0",
