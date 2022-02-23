@@ -1,16 +1,8 @@
-import React, {useState} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import webexComponentClasses from '../../helpers';
 import {useRef, useAutoFocus} from '../../hooks';
-import {clamp} from '../../../util';
-import Button from '../Button/Button';
-import Icon from '../Icon/Icon';
 import Label from '../../inputs/Label/Label';
-
-const HINTS = {
-  hiddenPasswordButton: 'Show password',
-  showedPasswordButton: 'Hide password',
-};
 
 /**
  * Generic input field component for building more specific components (text, date, number, etc.).
@@ -31,6 +23,7 @@ const HINTS = {
  * @param {string} [props.pattern]  Specifies a regular expression that the element's value is checked against
  * @param {string} [props.placeholder]  Input placeholder
  * @param {boolean} [props.required=false]  Flag indicating input required
+ * @param {React.JSX.Element} [props.rightControls]  Controls to be displayed to the right of the input
  * @param {boolean|React.JSX.Element} [props.rightIcon]  Icon to be displayed on the right side of the input
  * @param {object} [props.style]  Custom style to apply
  * @param {number} [props.tabIndex]  Value of the tabIndex
@@ -53,6 +46,7 @@ export default function InputField({
   pattern,
   placeholder,
   required,
+  rightControls,
   rightIcon,
   style,
   tabIndex,
@@ -62,16 +56,10 @@ export default function InputField({
   const [cssClasses, sc] = webexComponentClasses('input-field', className, {
     error,
     'has-right-icon': rightIcon !== undefined,
+    'has-right-controls': rightControls,
   });
-  const [isPwdRevealed, setIsPwdRevealed] = useState(false);
   const inputRef = useRef();
   const handleChange = (event) => onChange(event.target.value);
-  const handleIncrement = () => onChange(clamp(Number(value) + 1, min, max));
-  const handleDecrement = () => onChange(clamp(Number(value) - 1, min, max));
-
-  const toggleIsPwdRevealed = () => {
-    setIsPwdRevealed((revealed) => !revealed);
-  };
 
   useAutoFocus(inputRef, autoFocus);
 
@@ -101,34 +89,17 @@ export default function InputField({
           ref={inputRef}
           required={required}
           tabIndex={tabIndex}
-          type={isPwdRevealed ? 'text' : type}
+          type={type}
           value={value}
         />
-        {type === 'password' && value && (
-          <Button
-            type="ghost"
-            className={sc('right-icon')}
-            size={28}
-            onClick={toggleIsPwdRevealed}
-            tabIndex={tabIndex}
-            ariaLabel={isPwdRevealed ? HINTS.showedPasswordButton : HINTS.hiddenPasswordButton}
-          >
-            <Icon name={isPwdRevealed ? 'hide-password' : 'show-password'} />
-          </Button>
-        )}
         {!!rightIcon && (
           <span className={sc('right-icon')}>
             {rightIcon}
           </span>
         )}
-        {type === 'number' && (
-          <div className={sc('input-controls')}>
-            <Button type="ghost" className={sc('input-increment-button')} onClick={handleIncrement}>
-              <Icon name="control-up" size={13} />
-            </Button>
-            <Button type="ghost" className={sc('input-decrement-button')} onClick={handleDecrement}>
-              <Icon name="control-down" size={13} />
-            </Button>
+        {rightControls && (
+          <div className={sc('right-controls')}>
+            {rightControls}
           </div>
         )}
       </div>
@@ -151,6 +122,7 @@ InputField.propTypes = {
   pattern: PropTypes.string,
   placeholder: PropTypes.string,
   required: PropTypes.bool,
+  rightControls: PropTypes.node,
   rightIcon: PropTypes.oneOfType([
     PropTypes.bool,
     PropTypes.object,
@@ -179,6 +151,7 @@ InputField.defaultProps = {
   pattern: undefined,
   placeholder: undefined,
   required: false,
+  rightControls: undefined,
   rightIcon: undefined,
   style: undefined,
   tabIndex: 0,
