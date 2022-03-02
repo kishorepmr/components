@@ -1,3 +1,53 @@
+## [1.254.1](https://github.com/webex/components/compare/v1.254.0...v1.254.1) (2022-03-01)
+
+
+### Bug Fixes
+
+* **Dropdown:** fix background color in focus state ([bf88170](https://github.com/webex/components/commit/bf88170a454d6263ecbf75755c445ebe01849fcc))
+
+# [1.254.0](https://github.com/webex/components/compare/v1.253.5...v1.254.0) (2022-02-25)
+
+
+### Features
+
+* **AdaptiveCardsActionExecute:** make Action.Execute an alias of Action.Submit ([f1c9eaa](https://github.com/webex/components/commit/f1c9eaa9b0d4ebc731ebbc158fd711ab971fdb92))
+
+## [1.253.5](https://github.com/webex/components/compare/v1.253.4...v1.253.5) (2022-02-24)
+
+
+### Bug Fixes
+
+* **Dropdown:** improve accessibility for the dropdown component ([71c56e9](https://github.com/webex/components/commit/71c56e98ab4540da444c5f3e325e2be390f804fe))
+
+## [1.253.4](https://github.com/webex/components/compare/v1.253.3...v1.253.4) (2022-02-23)
+
+
+### Bug Fixes
+
+* **components:** prevent vertical shrinking ([ff521c5](https://github.com/webex/components/commit/ff521c5a71d4241c348146393082e11520e48689))
+
+## [1.253.3](https://github.com/webex/components/compare/v1.253.2...v1.253.3) (2022-02-23)
+
+
+### Bug Fixes
+
+* **components:** fix and standardize typography ([eb73d21](https://github.com/webex/components/commit/eb73d21fe30ac67450ac29bfda08269a116a7cf5))
+* **Dropdown:** keep options inside the viewport and hide them on outside scroll ([34b3eda](https://github.com/webex/components/commit/34b3eda12cc881177cb8ea73cc9804a55401d095))
+
+## [1.253.2](https://github.com/webex/components/compare/v1.253.1...v1.253.2) (2022-02-23)
+
+
+### Bug Fixes
+
+* **Dropdown:**  collapse dropdown when pressing esc key on the keyboard ([9983999](https://github.com/webex/components/commit/998399957da0dddcdd24dd7bf2f220b858d163af))
+
+## [1.253.1](https://github.com/webex/components/compare/v1.253.0...v1.253.1) (2022-02-23)
+
+
+### Bug Fixes
+
+* **themes:** change some color variables for dropdown ([6f38f63](https://github.com/webex/components/commit/6f38f63086bda78d03df575c0d7e9839da340c2d))
+
 # [1.253.0](https://github.com/webex/components/compare/v1.252.0...v1.253.0) (2022-02-18)
 
 
