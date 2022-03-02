@@ -73,8 +73,9 @@ export default class MembershipJSONAdapter extends MembershipsAdapter {
    * Returns an observable that emits the response after
    * members added to space
    *
-   * @param {string} roomId
-   * @param {string} personalEmail
+   * @param {string} roomId Room id in which members are to be added
+   * @param {string} personalEmail email of person to be added in space
+   * @returns {Observable<Member>} Observable that emits data after creation of space
    */
   addMembersToSpace({roomId, personalEmail}) {
     return new Observable((observer) => {
