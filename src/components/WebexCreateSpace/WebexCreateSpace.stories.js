@@ -11,7 +11,6 @@ const Template = (args) => <WebexCreateSpace {...args} />;
 export const createSpace = Template.bind({});
 
 createSpace.args = {
-  accessToken: '',
   createSpace: true,
   spaceName: 'test-widgets',
   createSpaceResponse: (err, data) => console.log(err, data),
