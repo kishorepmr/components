@@ -3,11 +3,11 @@ $C: #{$WEBEX_COMPONENTS_CLASS_PREFIX}-button;
 .#{$C} {
   @include focusable;
   display: flex;
+  flex-shrink: 0;
   justify-content: center;
   align-items: center;
   border-radius: 1000px;
   font-family: $brand-font-medium;
-  font-size: 1rem;
   line-height: 1;
   padding: 0 0.75rem;
 
