@@ -10,7 +10,6 @@ import {AdapterContext} from '../hooks/contexts';
  *
  * @param {object} props Data passed to the component
  * @param {string} props.spaceName name of space to be created
- * @param {string} props.accessToken accesstoken to call the webex sdk
  * @param {bool} props.createSpace bool to call the webex create space api
  * @param {func} props.createSpaceResponse callback function to return response
  *  of the create space api
@@ -19,7 +18,6 @@ import {AdapterContext} from '../hooks/contexts';
  */
 export default function WebexCreateSpace({
   spaceName,
-  accessToken,
   createSpace,
   createSpaceResponse,
 }) {
@@ -70,10 +68,10 @@ export default function WebexCreateSpace({
 
   const handleCreateSpace = () => {
     if (createSpace) {
-      if (accessToken && spaceTitle) {
+      if (spaceTitle) {
         adapter.roomsAdapter.createRoom(spaceTitle).subscribe(createRoomSuccess, onError);
       } else {
-        showBanner(true, 'access token or space name is missing');
+        showBanner(true, 'space name is missing');
         if (createSpaceResponse) createSpaceResponse({error: 'access token or space name is missing'});
       }
     } else {
@@ -119,13 +117,12 @@ export default function WebexCreateSpace({
 
 WebexCreateSpace.propTypes = {
   spaceName: PropTypes.string,
-  accessToken: PropTypes.string.isRequired,
   createSpace: PropTypes.bool,
   createSpaceResponse: PropTypes.func,
 };
 
 WebexCreateSpace.defaultProps = {
   spaceName: '',
-  createSpace: PropTypes.bool,
+  createSpace: true,
   createSpaceResponse: undefined,
 };

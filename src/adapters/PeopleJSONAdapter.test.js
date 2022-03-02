@@ -54,4 +54,36 @@ describe('People JSON Adapter Interface', () => {
       );
     });
   });
+
+  describe('getPersonList()', () => {
+    test('returns people list on search', (done) => {
+      peopleJSONAdapter.getPersonList(personID).subscribe((data) => {
+        expect(data).toEqual(people[personID]);
+        done();
+      });
+    });
+
+    test('throws an error message', (done) => {
+      const wrongPersonName = 'wrongPersonName';
+
+      peopleJSONAdapter.getPersonList(wrongPersonName).subscribe(
+        () => {},
+        (error) => {
+          expect(error.message).toBe(`could not find the person with query${wrongPersonName}`);
+          done();
+        },
+      );
+    });
+
+    test('completes the observable', (done) => {
+      peopleJSONAdapter.getPersonList(personID).subscribe(
+        () => {},
+        () => {},
+        () => {
+          expect(true).toBeTruthy();
+          done();
+        },
+      );
+    });
+  });
 });
