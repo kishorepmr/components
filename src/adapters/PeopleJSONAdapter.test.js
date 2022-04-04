@@ -55,9 +55,9 @@ describe('People JSON Adapter Interface', () => {
     });
   });
 
-  describe('getPersonList()', () => {
+  describe('searchPeople()', () => {
     test('returns people list on search', (done) => {
-      peopleJSONAdapter.getPersonList(personID).subscribe((data) => {
+      peopleJSONAdapter.searchPeople(personID).subscribe((data) => {
         expect(data).toEqual(people[personID]);
         done();
       });
@@ -66,7 +66,7 @@ describe('People JSON Adapter Interface', () => {
     test('throws an error message', (done) => {
       const wrongPersonName = 'wrongPersonName';
 
-      peopleJSONAdapter.getPersonList(wrongPersonName).subscribe(
+      peopleJSONAdapter.searchPeople(wrongPersonName).subscribe(
         () => {},
         (error) => {
           expect(error.message).toBe(`could not find the person with query${wrongPersonName}`);
@@ -76,7 +76,7 @@ describe('People JSON Adapter Interface', () => {
     });
 
     test('completes the observable', (done) => {
-      peopleJSONAdapter.getPersonList(personID).subscribe(
+      peopleJSONAdapter.searchPeople(personID).subscribe(
         () => {},
         () => {},
         () => {

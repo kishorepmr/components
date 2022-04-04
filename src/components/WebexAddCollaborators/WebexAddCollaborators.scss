@@ -19,7 +19,6 @@ $C:#{$WEBEX_COMPONENTS_CLASS_PREFIX}-add-collaborators;
         stroke-width: 1px;
         transition: box-shadow 0.15s ease-out;
 
-
         .#{$C}__people-added {
             background: var(--wxc-primary-background);
             box-shadow: var(--wxc-box-shadow);
@@ -52,6 +51,7 @@ $C:#{$WEBEX_COMPONENTS_CLASS_PREFIX}-add-collaborators;
 
             .#{$C}__avatar {
                 width: 2.5rem;
+                height: auto;
             }
 
             .#{$C}__data {
@@ -67,7 +67,8 @@ $C:#{$WEBEX_COMPONENTS_CLASS_PREFIX}-add-collaborators;
     }  
 
     .#{$WEBEX_COMPONENTS_CLASS_PREFIX}-input-field__input {
-        border: none;
-        box-shadow: none;
+        border: none !important;
+        outline: none !important;
+        box-shadow: none !important;
     } 
 }

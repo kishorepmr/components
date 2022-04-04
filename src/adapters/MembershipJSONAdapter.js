@@ -70,17 +70,17 @@ export default class MembershipJSONAdapter extends MembershipsAdapter {
   }
 
   /**
-   * Returns an observable that emits the response after
-   * members added to space
+   * Returns an observable that emits the membership with a member added to the room.
    *
-   * @param {string} roomId Room id in which members are to be added
-   * @param {string} personalEmail email of person to be added in space
-   * @returns {Observable<Member>} Observable that emits data after creation of space
+   * @param {string} personID ID of the person to add to a room
+   * @param {string} roomID ID of the room to add the person into
+   * @returns {external:Observable.<Member>} Observable stream that emits the membership with the added member
+   * @memberof MembershipAdapter
    */
-  addMembersToSpace({roomId, personalEmail}) {
+  addRoomMember(personID, roomID) {
     return new Observable((observer) => {
-      if (this.datasource[roomId]) {
-        observer.next({...this.datasource[roomId], personalEmail});
+      if (this.datasource[roomID]) {
+        observer.next({...this.datasource[roomID], personID});
       } else {
         observer.error(new Error('Could not add members to room'));
       }
