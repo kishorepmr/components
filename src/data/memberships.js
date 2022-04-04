@@ -287,14 +287,14 @@ export default {
     members: [],
   },
   1: {
-    id: '1',
-    roomId: '1',
+    ID: '1',
+    roomID: '1',
     roomType: 'group',
     isModerator: false,
   },
   2: {
-    id: '2',
-    roomId: '2',
+    ID: '2',
+    roomID: '2',
     roomType: 'group',
     isModerator: false,
   },

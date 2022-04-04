@@ -27,7 +27,7 @@ export default function useAddCollaborators(query) {
       setPersonList([]);
     };
 
-    const subscription = peopleAdapter.getPersonList(query).subscribe(getList, onError);
+    const subscription = peopleAdapter.searchPeople(query).subscribe(getList, onError);
 
     return () => {
       subscription.unsubscribe();
