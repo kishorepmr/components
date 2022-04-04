@@ -141,14 +141,14 @@ describe('Rooms JSON Adapter Interface', () => {
     const title = 'widgets';
 
     test('create a room', (done) => {
-      roomsJSONAdapter.createRoom(title).subscribe((data) => {
+      roomsJSONAdapter.createRoom({title}).subscribe((data) => {
         expect(data).toEqual(rooms[title]);
         done();
       });
     });
 
-    test('throw an error', (done) => {
-      roomsJSONAdapter.createRoom().subscribe(
+    test('throw an error when title not defined', (done) => {
+      roomsJSONAdapter.createRoom({title: ''}).subscribe(
         () => {},
         (error) => {
           expect(error.message).toBe('error in creating room');
@@ -158,7 +158,7 @@ describe('Rooms JSON Adapter Interface', () => {
     });
 
     test('completes the observable', (done) => {
-      roomsJSONAdapter.createRoom(title).subscribe(
+      roomsJSONAdapter.createRoom({title}).subscribe(
         () => {},
         () => {},
         () => {

@@ -9,8 +9,8 @@ describe('Membership JSON Adapter', () => {
   const membershipID = 'membership1';
   let membershipJSONAdapter;
   let testMembership;
-  const roomId = '1';
-  const personalEmail = 'maria@acme.com';
+  let roomID = '1';
+  const personID = 'user1';
 
   beforeEach(() => {
     membershipJSONAdapter = new MembershipJSONAdapter(JSONData);
@@ -46,36 +46,30 @@ describe('Membership JSON Adapter', () => {
     });
   });
 
-  describe('addMembersToSpace()', () => {
+  describe('addRoomMember()', () => {
+    test('returns an observable', () => {
+      expect(isObservable(membershipJSONAdapter.addRoomMember())).toBeTruthy();
+    });
+
     test('add members to room', (done) => {
-      membershipJSONAdapter.addMembersToSpace({roomId, personalEmail}).subscribe((data) => {
+      membershipJSONAdapter.addRoomMember(personID, roomID).subscribe((data) => {
         expect(data).toMatchObject({
-          id: '1',
-          roomId: '1',
+          ID: '1',
+          roomID: '1',
           roomType: 'group',
           isModerator: false,
-          personalEmail,
+          personID,
         });
         done();
       });
     });
 
-    test('throw an error when invalid room id', (done) => {
-      membershipJSONAdapter.addMembersToSpace({roomId: 'invalid', personalEmail}).subscribe(
+    test('throw an error when invalid room ID', (done) => {
+      roomID = 'invalid';
+      membershipJSONAdapter.addRoomMember(personID, roomID).subscribe(
         () => {},
         (error) => {
           expect(error.message).toBe('Could not add members to room');
-          done();
-        },
-      );
-    });
-
-    test('completes the observable', (done) => {
-      membershipJSONAdapter.addMembersToSpace({roomId, personalEmail}).subscribe(
-        () => {},
-        () => {},
-        () => {
-          expect(true).toBeTruthy();
           done();
         },
       );
