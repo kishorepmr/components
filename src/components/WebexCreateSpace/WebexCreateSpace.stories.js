@@ -1,5 +1,6 @@
 import React from 'react';
 import WebexCreateSpace from './WebexCreateSpace';
+import People from '../../data/people';
 
 export default {
   title: 'Platform/Webex Create Space',
@@ -14,4 +15,14 @@ createSpace.args = {
   createSpace: true,
   spaceName: 'test-widgets',
   createSpaceResponse: (err, data) => console.log(err, data),
+  webexLookAhead: false,
+  memberLookAhead: (error, query) => {
+    let result;
+
+    if (query) {
+      result = People[query];
+    }
+
+    return result;
+  },
 };

@@ -1,11 +1,13 @@
-import React, {useState, forwardRef, useImperativeHandle} from 'react';
+import React, {
+  useState, forwardRef, useImperativeHandle, useContext,
+} from 'react';
 import PropTypes from 'prop-types';
 import {
   InputField, OptionsList, Icon, Button,
 } from '../generic';
-import {useAddCollaborators} from '../hooks';
 import webexComponentClasses from '../helpers';
 import Label from '../inputs/Label/Label';
+import {AdapterContext} from '../hooks/contexts';
 
 /**
  * Webex Add Collaborators component is used to search people based on
@@ -13,15 +15,39 @@ import Label from '../inputs/Label/Label';
  *
  * @param {Function} props.addedSpaceMembers Callback function to return the people to be added
  * in the space
+ * @param {boolean} props.webexLookAhead Boolean to search people in webex sdk
+ * @param {Function} props.memberLookAhead Callback function to search people if webexLookAhead is false
  * @param {object} props.style Custom style to apply
  * @returns {object} JSX of component
  */
-const WebexAddCollaborators = forwardRef(({addedSpaceMembers, style}, ref) => {
+
+const WebexAddCollaborators = forwardRef(({
+  addedSpaceMembers, webexLookAhead, memberLookAhead, style,
+}, ref) => {
   const [inputValue, setInputValue] = useState('');
   const [peopleSelected, setPeopleSelected] = useState([]);
   const [personIdSelected, setPersonIdSelected] = useState([]);
   const [cssClasses, sc] = webexComponentClasses('add-collaborators');
-  let searchList = useAddCollaborators(inputValue);
+  const adapter = useContext(AdapterContext);
+
+  let searchList;
+
+  const searchPeopleSuccess = (list) => {
+    searchList = [...list];
+  };
+
+  const onError = () => {
+    searchList = [];
+  };
+
+  if (inputValue) {
+    if (webexLookAhead) {
+      adapter.peopleAdapter.searchPeople(inputValue)
+        .subscribe(searchPeopleSuccess, onError);
+    } else {
+      searchList = memberLookAhead(null, inputValue);
+    }
+  }
 
   const clearInput = () => {
     setInputValue('');
@@ -48,7 +74,7 @@ const WebexAddCollaborators = forwardRef(({addedSpaceMembers, style}, ref) => {
     const newPeopleSelected = peopleSelected.filter((key) => (key.ID !== ID));
 
     setPeopleSelected(newPeopleSelected);
-    if (addedSpaceMembers) addedSpaceMembers(newPersonIdSelected);
+    if (addedSpaceMembers) addedSpaceMembers(null, newPersonIdSelected);
   };
 
   // add/remove people on list click
@@ -61,7 +87,7 @@ const WebexAddCollaborators = forwardRef(({addedSpaceMembers, style}, ref) => {
     } else {
       setPersonIdSelected([...personIdSelected, id]);
       setPeopleSelected([...peopleSelected, item]);
-      if (addedSpaceMembers) addedSpaceMembers([...personIdSelected, id]);
+      if (addedSpaceMembers) addedSpaceMembers(null, [...personIdSelected, id]);
     }
   };
 
@@ -165,11 +191,15 @@ const WebexAddCollaborators = forwardRef(({addedSpaceMembers, style}, ref) => {
 
 WebexAddCollaborators.propTypes = {
   addedSpaceMembers: PropTypes.func,
+  webexLookAhead: PropTypes.bool,
+  memberLookAhead: PropTypes.func,
   style: PropTypes.shape(),
 };
 
 WebexAddCollaborators.defaultProps = {
   addedSpaceMembers: PropTypes.func,
+  webexLookAhead: true,
+  memberLookAhead: undefined,
   style: undefined,
 };
 

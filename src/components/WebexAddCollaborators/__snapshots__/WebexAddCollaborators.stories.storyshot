@@ -44,9 +44,6 @@ Array [
         </div>
       </label>
     </div>
-    <div
-      className="wxc-add-collaborators__suggestions"
-    />
   </div>,
   <video
     autoPlay={true}
