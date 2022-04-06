@@ -14,6 +14,8 @@ import {AdapterContext} from '../hooks/contexts';
  * @param {boolean} props.createSpace Boolean to call the webex create space api
  * @param {Function} props.createSpaceResponse Callback function to return response
  *  of the create space api
+ * @param {boolean} props.webexLookAhead Boolean to search people in webex sdk
+ * @param {Function} props.memberLookAhead Callback function to search people if webexLookAhead is false
  * @param {object} props.style Custom style to apply
  * @returns {object} JSX of the component
  *
@@ -22,6 +24,8 @@ export default function WebexCreateSpace({
   spaceName,
   createSpace,
   createSpaceResponse,
+  webexLookAhead,
+  memberLookAhead,
   style,
 }) {
   const [spaceTitle, setSpaceTitle] = useState(spaceName);
@@ -81,13 +85,13 @@ export default function WebexCreateSpace({
         showBanner(true, 'space name is missing');
         if (createSpaceResponse) createSpaceResponse({error: 'access token or space name is missing'});
       }
-    } else {
-      if (createSpaceResponse) createSpaceResponse(null, {data: {spaceTitle, addedSpaceMembers}});
-      handleCancel();
+    }
+    if (createSpaceResponse) {
+      createSpaceResponse(null, {data: {spaceTitle, addedSpaceMembers}});
     }
   };
 
-  const handleAddedSpaceMembers = (members) => {
+  const handleAddedSpaceMembers = (error, members) => {
     setAddedSpaceMembers(members);
   };
 
@@ -102,6 +106,8 @@ export default function WebexCreateSpace({
       <WebexAddCollaborators
         addedSpaceMembers={handleAddedSpaceMembers}
         ref={addCollaboratorsRef}
+        webexLookAhead={webexLookAhead}
+        memberLookAhead={memberLookAhead}
       />
       {alertMsg}
       <div className={sc('buttons')}>
@@ -126,6 +132,8 @@ WebexCreateSpace.propTypes = {
   spaceName: PropTypes.string,
   createSpace: PropTypes.bool,
   createSpaceResponse: PropTypes.func,
+  webexLookAhead: PropTypes.bool,
+  memberLookAhead: PropTypes.func,
   style: PropTypes.shape(),
 };
 
@@ -133,5 +141,7 @@ WebexCreateSpace.defaultProps = {
   spaceName: '',
   createSpace: true,
   createSpaceResponse: undefined,
+  webexLookAhead: true,
+  memberLookAhead: undefined,
   style: undefined,
 };
