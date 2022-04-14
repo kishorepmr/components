@@ -64,6 +64,20 @@ $C:#{$WEBEX_COMPONENTS_CLASS_PREFIX}-add-collaborators;
                 text-align: end;
             }
         }
+
+        .#{$C}__list-heading {
+            padding: 5px;
+            border-bottom: 1px solid grey;
+            background: var(--wxc-options-list--normal--background);
+        }
+
+        .#{$C}__search-error {
+            font-size: 12px;
+            padding: 10px;
+            color: grey;
+            background: var(--wxc-options-list--normal--background);
+            text-align: center;
+        }
     }  
 
     .#{$WEBEX_COMPONENTS_CLASS_PREFIX}-input-field__input {
@@ -71,4 +85,8 @@ $C:#{$WEBEX_COMPONENTS_CLASS_PREFIX}-add-collaborators;
         outline: none !important;
         box-shadow: none !important;
     } 
+
+    .#{$WEBEX_COMPONENTS_CLASS_PREFIX}-options-list {
+        border-radius: 0;
+    }
 }
