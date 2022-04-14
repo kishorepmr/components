@@ -16,7 +16,7 @@ import {AdapterContext} from '../hooks/contexts';
  * @param {Function} props.addedSpaceMembers Callback function to return the people to be added
  * in the space
  * @param {boolean} props.webexLookAhead Boolean to search people in webex sdk
- * @param {Function} props.memberLookAhead Callback function to search people if webexLookAhead is false
+ * @param {Function} props.memberLookAhead Callback function to search people from collaborators
  * @param {object} props.style Custom style to apply
  * @returns {object} JSX of component
  */
@@ -30,22 +30,24 @@ const WebexAddCollaborators = forwardRef(({
   const [cssClasses, sc] = webexComponentClasses('add-collaborators');
   const adapter = useContext(AdapterContext);
 
-  let searchList;
+  let contactsList;
+  let collaboratorsList;
 
   const searchPeopleSuccess = (list) => {
-    searchList = [...list];
+    contactsList = [...list];
   };
 
   const onError = () => {
-    searchList = [];
+    contactsList = [];
   };
 
   if (inputValue) {
     if (webexLookAhead) {
       adapter.peopleAdapter.searchPeople(inputValue)
         .subscribe(searchPeopleSuccess, onError);
-    } else {
-      searchList = memberLookAhead(null, inputValue);
+    }
+    if (typeof memberLookAhead === 'function') {
+      collaboratorsList = memberLookAhead(null, inputValue);
     }
   }
 
@@ -53,7 +55,7 @@ const WebexAddCollaborators = forwardRef(({
     setInputValue('');
     setPersonIdSelected([]);
     setPeopleSelected([]);
-    searchList = [];
+    contactsList = [];
   };
 
   useImperativeHandle(ref, () => ({
@@ -111,10 +113,8 @@ const WebexAddCollaborators = forwardRef(({
     ))
   );
 
-  // function to render people list based on search
-  const renderSuggestions = () => {
-    if (!searchList) return null;
-    const content = searchList.map((item) => {
+  const renderPersonList = (list, type) => {
+    const content = list && list.map((item) => {
       const email = getEmail(item);
       const id = item.ID;
       const names = item?.displayName?.split(' ');
@@ -125,9 +125,9 @@ const WebexAddCollaborators = forwardRef(({
       */
       if (names) {
         initials =
-        names.length === 1
-          ? names[0][0]
-          : `${names[0][0]}${names[names.length - 1][0]}`;
+      names.length === 1
+        ? names[0][0]
+        : `${names[0][0]}${names[names.length - 1][0]}`;
       }
 
       return ({
@@ -140,9 +140,9 @@ const WebexAddCollaborators = forwardRef(({
             <div>
               {item?.avatar ? (
                 <img className={sc('avatar')} src={item?.avatar} alt="" />
-              ) : (
-                <span>{initials}</span>
-              )}
+            ) : (
+              <span>{initials}</span>
+            )}
             </div>
 
             <div className={sc('data')}>
@@ -159,14 +159,28 @@ const WebexAddCollaborators = forwardRef(({
     });
 
     return (
-      <div className={sc('suggestions')}>
-        {searchList.length ? (
+      <div>
+        <div className={sc('list-heading')}>{type}</div>
+        {list && list.length ? (
           <OptionsList
             options={content}
             onSelect={handleOnSelect}
           />
-        )
-          : null}
+        ) : (
+          <div className={sc('search-error')}>We cannot seem to find anyone matching your search.</div>
+        )}
+      </div>
+    );
+  };
+
+  // function to render people list based on search
+  const renderSuggestions = () => {
+    if (!contactsList && !collaboratorsList) return null;
+
+    return (
+      <div className={sc('suggestions')}>
+        {renderPersonList(collaboratorsList, 'Collaborators')}
+        {renderPersonList(contactsList, 'Contacts')}
       </div>
     );
   };

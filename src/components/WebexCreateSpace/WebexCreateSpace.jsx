@@ -15,7 +15,7 @@ import {AdapterContext} from '../hooks/contexts';
  * @param {Function} props.createSpaceResponse Callback function to return response
  *  of the create space api
  * @param {boolean} props.webexLookAhead Boolean to search people in webex sdk
- * @param {Function} props.memberLookAhead Callback function to search people if webexLookAhead is false
+ * @param {Function} props.memberLookAhead Callback function to search people from collaborators
  * @param {object} props.style Custom style to apply
  * @returns {object} JSX of the component
  *
@@ -83,7 +83,7 @@ export default function WebexCreateSpace({
         adapter.roomsAdapter.createRoom({title: spaceTitle}).subscribe(createRoomSuccess, onError);
       } else {
         showBanner(true, 'space name is missing');
-        if (createSpaceResponse) createSpaceResponse({error: 'access token or space name is missing'});
+        if (createSpaceResponse) createSpaceResponse({error: 'space name is missing'});
       }
     }
     if (createSpaceResponse) {

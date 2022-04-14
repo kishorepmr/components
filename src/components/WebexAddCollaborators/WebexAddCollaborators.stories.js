@@ -13,12 +13,12 @@ export const searchPeople = Template.bind({});
 
 searchPeople.args = {
   addedSpaceMembers: (error, members) => console.log('memebers added', members),
-  webexLookAhead: false,
+  webexLookAhead: true,
   memberLookAhead: (error, query) => {
     let result;
 
     if (query) {
-      result = People[query];
+      result = People[`${query}Collab`];
     }
 
     return result;

@@ -174,7 +174,8 @@ export default {
       avatar: './images/brenda.png',
       orgID: 'org1',
       status: null,
-    },
+    }],
+  brCollab: [
     {
       ID: 'user34',
       emails: [
@@ -240,7 +241,6 @@ export default {
       orgID: 'org1',
       status: null,
     },
-
   ],
   maria: [
     {
