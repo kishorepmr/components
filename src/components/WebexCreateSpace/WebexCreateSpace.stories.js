@@ -15,12 +15,12 @@ createSpace.args = {
   createSpace: true,
   spaceName: 'test-widgets',
   createSpaceResponse: (err, data) => console.log(err, data),
-  webexLookAhead: false,
+  webexLookAhead: true,
   memberLookAhead: (error, query) => {
     let result;
 
     if (query) {
-      result = People[query];
+      result = People[`${query}Collab`];
     }
 
     return result;
