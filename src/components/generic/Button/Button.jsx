@@ -45,9 +45,8 @@ export default function Button({
     <>
       <button
         className={cssClasses}
-        disabled={isDisabled}
         type="button"
-        onClick={onClick}
+        onClick={!isDisabled ? onClick : undefined}
         aria-label={ariaLabel}
         // disabling no-autofocus because otherwise this element cannot be autofocused depending on the autoFocus prop
         // eslint-disable-next-line jsx-a11y/no-autofocus
@@ -55,6 +54,7 @@ export default function Button({
         tabIndex={tabIndex}
         ref={buttonRef}
         style={{height: size, ...style}}
+        wxc-disabled={isDisabled ? 'true' : undefined}
       >
         {children}
       </button>

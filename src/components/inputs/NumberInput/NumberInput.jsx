@@ -6,6 +6,12 @@ import {InputField} from '../../generic';
 import Button from '../../generic/Button/Button';
 import Icon from '../../generic/Icon/Icon';
 
+const HINTS = {
+  clearButton: 'Clear input',
+  increaseButton: 'Increase value',
+  decreaseButton: 'Decrease value',
+};
+
 /**
  * NumberInput component
  *
@@ -48,17 +54,29 @@ export default function NumberInput({
   const clearInput = () => onChange('');
 
   const clearButton = (
-    <Button type="ghost" size={28} onClick={clearInput} tabIndex={tabIndex}>
+    <Button ariaLabel={HINTS.clearButton} type="ghost" size={28} onClick={clearInput} tabIndex={tabIndex}>
       <Icon name="cancel" size={16} />
     </Button>
   );
 
   const rightControls = (
     <div className={sc('controls')}>
-      <Button type="ghost" className={sc('increment-button')} onClick={handleIncrement} onMouseDown={(event) => event.stopPropagation()}>
+      <Button
+        ariaLabel={HINTS.increaseButton}
+        className={sc('increment-button')}
+        onClick={handleIncrement}
+        onMouseDown={(event) => event.stopPropagation()}
+        type="ghost"
+      >
         <Icon name="control-up" size={13} />
       </Button>
-      <Button type="ghost" className={sc('decrement-button')} onClick={handleDecrement} onMouseDown={(event) => event.stopPropagation()}>
+      <Button
+        ariaLabel={HINTS.decreaseButton}
+        className={sc('decrement-button')}
+        onClick={handleDecrement}
+        onMouseDown={(event) => event.stopPropagation()}
+        type="ghost"
+      >
         <Icon name="control-down" size={13} />
       </Button>
     </div>
@@ -101,7 +119,7 @@ NumberInput.propTypes = {
   required: PropTypes.bool,
   style: PropTypes.shape(),
   tabIndex: PropTypes.number,
-  value: PropTypes.oneOf([
+  value: PropTypes.oneOfType([
     PropTypes.number,
     PropTypes.string,
   ]),

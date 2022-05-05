@@ -3,11 +3,9 @@ import PropTypes from 'prop-types';
 import webexComponentClasses from '../../helpers';
 import {acPropTypes, registerComponent} from '../Component/Component';
 import AdaptiveCardContext from '../context/adaptive-card-context';
-import {Dropdown} from '../../inputs';
-import Checkbox from '../../inputs/Checkbox/Checkbox';
-import Label from '../../inputs/Label/Label';
-import RadioButton from '../../inputs/RadioButton/RadioButton';
+import {Dropdown, CheckboxSet, RadioSet} from '../../inputs';
 import {formatDateTime} from '../util';
+import {uniqueId} from '../../../util';
 
 /**
  * Adaptive Cards InputChoiceSet component
@@ -16,11 +14,12 @@ import {formatDateTime} from '../util';
  * @param {object} props  React props passed to the component
  * @param {object} props.data  Active cards definition
  * @param {string} [props.className]  Custom CSS class to apply
+ * @param {string} [props.id]  DOM id
  * @param {object} [props.style]  Custom style to apply
  * @returns {object} JSX of the component
  */
 export default function InputChoiceSet({
-  data, className, style,
+  data, className, id: domId, style,
 }) {
   const [cssClasses] = webexComponentClasses('adaptive-cards-input-choice-set', className);
   const {
@@ -28,45 +27,8 @@ export default function InputChoiceSet({
   } = useContext(AdaptiveCardContext);
   const value = getValue(data.id);
   const values = value ? Object.fromEntries(String(value).split(',').map((v) => [v, true])) : {};
-  let input;
-
-  const onSingleChange = (val) => {
-    setValue(data.id, val);
-  };
-
-  const onMultiChange = (val, isSelected) => {
-    values[val] = isSelected;
-    setValue(data.id, data.choices.map((choice) => (values[choice.value] ? choice.value : undefined)).filter((v) => v !== undefined).join(','));
-  };
-
-  if (data.isMultiSelect === true || data.choices.length === 1) {
-    input = data.choices.map((choice, index) => (
-      <Checkbox
-        key={index}
-        onChange={(isSelected) => onMultiChange(choice.value, isSelected)}
-        selected={values[choice.value]}
-        title={choice.title}
-      />
-    ));
-  } else if (String(data.style).toLowerCase() === 'compact') {
-    input = (
-      <Dropdown
-        onChange={(option) => onSingleChange(option)}
-        options={data.choices.map((choice) => ({label: choice.title, value: choice.value}))}
-        placeholder={data.placeholder}
-        value={value}
-      />
-    );
-  } else {
-    input = data.choices.map((choice, index) => (
-      <RadioButton
-        key={index}
-        onChange={() => onSingleChange(choice.value)}
-        selected={choice.value === value}
-        title={choice.title}
-      />
-    ));
-  }
+  const id = domId || uniqueId();
+  let comp;
 
   useEffect(() => {
     setInput({
@@ -83,27 +45,72 @@ export default function InputChoiceSet({
     setInput,
   ]);
 
-  return (
-    <Label
-      className={cssClasses}
-      error={getError(data.id)}
-      label={formatDateTime(data.label)}
-      required={data.isRequired}
-      style={style}
-    >
-      {input}
-    </Label>
-  );
+  const onSingleChange = (val) => {
+    setValue(data.id, val);
+  };
+
+  const onMultiChange = (val, isSelected) => {
+    values[val] = isSelected;
+    setValue(data.id, data.choices.map((choice) => (values[choice.value] ? choice.value : undefined)).filter((v) => v !== undefined).join(','));
+  };
+
+  if (data.isMultiSelect === false && String(data.style).toLowerCase() === 'compact') {
+    comp = (
+      <Dropdown
+        className={cssClasses}
+        error={getError(data.id)}
+        id={id}
+        label={formatDateTime(data.label)}
+        onChange={(option) => onSingleChange(option)}
+        options={data.choices.map((choice) => ({label: choice.title, value: choice.value}))}
+        placeholder={data.placeholder}
+        required={data.isRequired}
+        value={value}
+      />
+    );
+  } else if (data.isMultiSelect === true || data.choices.length === 1) {
+    comp = (
+      <CheckboxSet
+        className={cssClasses}
+        error={getError(data.id)}
+        id={id}
+        label={formatDateTime(data.label)}
+        onChange={onMultiChange}
+        options={data.choices.map((choice) => ({label: choice.title, value: choice.value}))}
+        required={data.isRequired}
+        selected={values}
+        style={style}
+      />
+    );
+  } else {
+    comp = (
+      <RadioSet
+        className={cssClasses}
+        error={getError(data.id)}
+        id={id}
+        label={formatDateTime(data.label)}
+        onChange={onSingleChange}
+        options={data.choices.map((choice) => ({label: choice.title, value: choice.value}))}
+        required={data.isRequired}
+        selected={value}
+        style={style}
+      />
+    );
+  }
+
+  return comp;
 }
 
 InputChoiceSet.propTypes = {
   data: PropTypes.shape().isRequired,
   className: PropTypes.string,
+  id: PropTypes.string,
   style: PropTypes.shape(),
 };
 
 InputChoiceSet.defaultProps = {
   className: '',
+  id: undefined,
   style: undefined,
 };
 
