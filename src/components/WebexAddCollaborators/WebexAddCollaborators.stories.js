@@ -1,5 +1,6 @@
 import React from 'react';
 import WebexAddCollaborators from './WebexAddCollaborators';
+import People from '../../data/people';
 
 export default {
   title: 'Platform/Webex Add Collaborators',
@@ -9,3 +10,17 @@ export default {
 const Template = (args) => <WebexAddCollaborators {...args} />;
 
 export const searchPeople = Template.bind({});
+
+searchPeople.args = {
+  addedSpaceMembers: (error, members) => console.log('memebers added', members),
+  webexLookAhead: true,
+  memberLookAhead: (error, query) => {
+    let result;
+
+    if (query) {
+      result = People[`${query}Collab`];
+    }
+
+    return result;
+  },
+};

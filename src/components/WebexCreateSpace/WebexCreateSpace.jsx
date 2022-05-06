@@ -1,5 +1,6 @@
 import React, {useState, useContext, useRef} from 'react';
 import PropTypes from 'prop-types';
+import {forkJoin} from 'rxjs';
 import {InputField, Button} from '../generic';
 import webexComponentClasses from '../helpers';
 import WebexAddCollaborators from '../WebexAddCollaborators/WebexAddCollaborators';
@@ -9,10 +10,13 @@ import {AdapterContext} from '../hooks/contexts';
  * Webex Create Space Component
  *
  * @param {object} props Data passed to the component
- * @param {string} props.spaceName name of space to be created
- * @param {bool} props.createSpace bool to call the webex create space api
- * @param {func} props.createSpaceResponse callback function to return response
+ * @param {string} props.spaceName Name of space to be created
+ * @param {boolean} props.createSpace Boolean to call the webex create space api
+ * @param {Function} props.createSpaceResponse Callback function to return response
  *  of the create space api
+ * @param {boolean} props.webexLookAhead Boolean to search people in webex sdk
+ * @param {Function} props.memberLookAhead Callback function to search people from collaborators
+ * @param {object} props.style Custom style to apply
  * @returns {object} JSX of the component
  *
  */
@@ -20,6 +24,9 @@ export default function WebexCreateSpace({
   spaceName,
   createSpace,
   createSpaceResponse,
+  webexLookAhead,
+  memberLookAhead,
+  style,
 }) {
   const [spaceTitle, setSpaceTitle] = useState(spaceName);
   const [cssClasses, sc] = webexComponentClasses('create-space');
@@ -60,32 +67,36 @@ export default function WebexCreateSpace({
   };
 
   const createRoomSuccess = (data) => {
-    addedSpaceMembers.forEach((email) => {
-      adapter.membershipsAdapter.addMembersToSpace({roomId: data.id, personalEmail: email})
-        .subscribe(addMembersSuccess, onError);
+    const membership = [];
+
+    addedSpaceMembers.forEach((personId) => {
+      membership.push(adapter.membershipsAdapter.addRoomMember(personId, data.ID));
     });
+
+    return forkJoin(membership)
+      .subscribe(addMembersSuccess, onError);
   };
 
   const handleCreateSpace = () => {
     if (createSpace) {
       if (spaceTitle) {
-        adapter.roomsAdapter.createRoom(spaceTitle).subscribe(createRoomSuccess, onError);
+        adapter.roomsAdapter.createRoom({title: spaceTitle}).subscribe(createRoomSuccess, onError);
       } else {
         showBanner(true, 'space name is missing');
-        if (createSpaceResponse) createSpaceResponse({error: 'access token or space name is missing'});
+        if (createSpaceResponse) createSpaceResponse({error: 'space name is missing'});
       }
-    } else {
-      if (createSpaceResponse) createSpaceResponse(null, {data: {spaceTitle, addedSpaceMembers}});
-      handleCancel();
+    }
+    if (createSpaceResponse) {
+      createSpaceResponse(null, {data: {spaceTitle, addedSpaceMembers}});
     }
   };
 
-  const handleAddedSpaceMembers = (members) => {
+  const handleAddedSpaceMembers = (error, members) => {
     setAddedSpaceMembers(members);
   };
 
   return (
-    <div className={cssClasses}>
+    <div className={cssClasses} style={style}>
       <InputField
         placeholder="Enter space name"
         label="Space name"
@@ -95,6 +106,8 @@ export default function WebexCreateSpace({
       <WebexAddCollaborators
         addedSpaceMembers={handleAddedSpaceMembers}
         ref={addCollaboratorsRef}
+        webexLookAhead={webexLookAhead}
+        memberLookAhead={memberLookAhead}
       />
       {alertMsg}
       <div className={sc('buttons')}>
@@ -119,10 +132,16 @@ WebexCreateSpace.propTypes = {
   spaceName: PropTypes.string,
   createSpace: PropTypes.bool,
   createSpaceResponse: PropTypes.func,
+  webexLookAhead: PropTypes.bool,
+  memberLookAhead: PropTypes.func,
+  style: PropTypes.shape(),
 };
 
 WebexCreateSpace.defaultProps = {
   spaceName: '',
   createSpace: true,
   createSpaceResponse: undefined,
+  webexLookAhead: true,
+  memberLookAhead: undefined,
+  style: undefined,
 };

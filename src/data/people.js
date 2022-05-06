@@ -82,7 +82,7 @@ export default {
   },
   bar: [
     {
-      id: 'user1',
+      ID: 'user1',
       emails: [
         'barbara@acme.com',
       ],
@@ -97,7 +97,7 @@ export default {
   ],
   br: [
     {
-      id: 'user5',
+      ID: 'user5',
       emails: [
         'brandon@acme.com',
       ],
@@ -110,7 +110,7 @@ export default {
       status: null,
     },
     {
-      id: 'user38',
+      ID: 'user38',
       emails: [
         'brenda@acme11.com',
       ],
@@ -123,7 +123,7 @@ export default {
       status: null,
     },
     {
-      id: 'user37',
+      ID: 'user37',
       emails: [
         'brenda@acme12.com',
       ],
@@ -136,7 +136,7 @@ export default {
       status: null,
     },
     {
-      id: 'user30',
+      ID: 'user30',
       emails: [
         'brenda@acme13.com',
       ],
@@ -150,7 +150,7 @@ export default {
     },
 
     {
-      id: 'user36',
+      ID: 'user36',
       emails: [
         'brenda@acme14.com',
       ],
@@ -163,7 +163,7 @@ export default {
       status: null,
     },
     {
-      id: 'user35',
+      ID: 'user35',
       emails: [
         'brenda@acme15.com',
       ],
@@ -174,9 +174,10 @@ export default {
       avatar: './images/brenda.png',
       orgID: 'org1',
       status: null,
-    },
+    }],
+  brCollab: [
     {
-      id: 'user34',
+      ID: 'user34',
       emails: [
         'brenda@acme5.com',
       ],
@@ -189,7 +190,7 @@ export default {
       status: null,
     },
     {
-      id: 'user33',
+      ID: 'user33',
       emails: [
         'brenda@acme4.com',
       ],
@@ -202,7 +203,7 @@ export default {
       status: null,
     },
     {
-      id: 'user32',
+      ID: 'user32',
       emails: [
         'brenda@acme3.com',
       ],
@@ -215,7 +216,7 @@ export default {
       status: null,
     },
     {
-      id: 'user31',
+      ID: 'user31',
       emails: [
         'brenda@acme2.com',
       ],
@@ -228,7 +229,7 @@ export default {
       status: null,
     },
     {
-      id: 'user3',
+      ID: 'user3',
       emails: [
         'brenda@acme1.com',
       ],
@@ -240,11 +241,10 @@ export default {
       orgID: 'org1',
       status: null,
     },
-
   ],
   maria: [
     {
-      id: 'user6',
+      ID: 'user6',
       emails: [
         'maria@acme.com',
       ],

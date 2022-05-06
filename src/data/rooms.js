@@ -37,12 +37,12 @@ export default {
   },
   'room4-activities': [],
   'test-widgets': {
-    id: '1',
+    ID: '1',
     title: 'test-widgets',
     type: 'group',
   },
   widgets: {
-    id: '2',
+    ID: '2',
     title: 'widgets',
     type: 'group',
   },
