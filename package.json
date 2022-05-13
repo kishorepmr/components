@@ -1,9 +1,10 @@
 {
   "name": "@webex/components",
-  "version": "1.254.1",
+  "version": "1.267.3",
   "browser": "dist/umd/webex-components.umd.min.js",
   "unpkg": "dist/umd/webex-components.umd.min.js",
   "module": "dist/es/webex-components.es.min.js",
+  "main": "dist/umd/webex-components.umd.min.js",
   "scripts": {
     "build": "rollup -c",
     "linter": "eslint src/ --ext .js,.jsx",
@@ -40,14 +41,12 @@
   },
   "dependencies": {
     "@juggle/resize-observer": "^3.2.0",
-    "@webex/component-adapter-interfaces": "^1.22.0",
+    "@webex/component-adapter-interfaces": "^1.23.0",
     "adaptive-expressions": "^4.15.0",
     "adaptivecards-templating": "^2.2.0",
     "classnames": "^2.2.6",
     "date-fns": "^2.15.0",
-    "logform": "^2.2.0",
-    "markdown-it": "^12.3.2",
-    "winston": "^3.3.3"
+    "markdown-it": "^12.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.11.4",

@@ -1,3 +1,231 @@
+## [1.267.3](https://github.com/webex/components/compare/v1.267.2...v1.267.3) (2022-03-31)
+
+
+### Bug Fixes
+
+* **DateInput,TimeInput:** adjust native browser controls icon position ([b140129](https://github.com/webex/components/commit/b1401294eb67870660328508632874d8fed4a826))
+
+## [1.267.2](https://github.com/webex/components/compare/v1.267.1...v1.267.2) (2022-03-30)
+
+
+### Bug Fixes
+
+* **MeetingsJsonAdapter:** prevent camera usage on iOS 15.1 due to iOS bug ([beb3ef0](https://github.com/webex/components/commit/beb3ef0c08afdde9504ae7609c0747ccff7a25a9))
+
+## [1.267.1](https://github.com/webex/components/compare/v1.267.0...v1.267.1) (2022-03-30)
+
+
+### Bug Fixes
+
+* **Tooltip:** don't display tooltip if on devices with touch ([b74a1ac](https://github.com/webex/components/commit/b74a1ac71cf02931b180bbe8323d38481e5005ed))
+
+# [1.267.0](https://github.com/webex/components/compare/v1.266.1...v1.267.0) (2022-03-29)
+
+
+### Features
+
+* **AdaptiveCards:** notify when a show card or open url action was performed ([3998ba3](https://github.com/webex/components/commit/3998ba39edb1459d3c80b7759c410d24c0455243))
+
+## [1.266.1](https://github.com/webex/components/compare/v1.266.0...v1.266.1) (2022-03-28)
+
+
+### Bug Fixes
+
+* **InputField,Textarea:** stop bubbling for processed arrow key events ([0c46a27](https://github.com/webex/components/commit/0c46a279781d46c7c101b23dd0402fe9bc417a85))
+
+# [1.266.0](https://github.com/webex/components/compare/v1.265.0...v1.266.0) (2022-03-28)
+
+
+### Features
+
+* **WebexAdaptiveCard:** allow rendering of more than one adaptive card for an activity ([076cc53](https://github.com/webex/components/commit/076cc530110b753fd48b9e8ed4d861dcd0d5b79c))
+
+# [1.265.0](https://github.com/webex/components/compare/v1.264.2...v1.265.0) (2022-03-24)
+
+
+### Features
+
+* **WebexAdaptiveCard:** add submit status message ([38c64a5](https://github.com/webex/components/commit/38c64a5f3a4fc2c38d8f3aed063ae0236382517a))
+
+## [1.264.2](https://github.com/webex/components/compare/v1.264.1...v1.264.2) (2022-03-23)
+
+
+### Bug Fixes
+
+* **icons:** correct the color of icon for a button in disabled state ([6da117e](https://github.com/webex/components/commit/6da117e8f15f98630db70c313d2bc619f585b2d0))
+
+## [1.264.1](https://github.com/webex/components/compare/v1.264.0...v1.264.1) (2022-03-23)
+
+
+### Bug Fixes
+
+* **themes:** remove color-scheme property from :root element ([e831a6d](https://github.com/webex/components/commit/e831a6d902710afd0adcf8d86d33b684c739eb9f))
+
+# [1.264.0](https://github.com/webex/components/compare/v1.263.0...v1.264.0) (2022-03-22)
+
+
+### Features
+
+* **ShareControl:** disable share screen on mobile browsers and Internet Explorer browser ([f9bda11](https://github.com/webex/components/commit/f9bda11a1af1041292055dd17e04de2b5b640f1a))
+
+# [1.263.0](https://github.com/webex/components/compare/v1.262.1...v1.263.0) (2022-03-22)
+
+
+### Features
+
+* **Button:** make tooltip appear even if button is disabled ([5d7a0ba](https://github.com/webex/components/commit/5d7a0baf65c85ef6e60f1e2526ff083ce6be3e9e))
+
+## [1.262.1](https://github.com/webex/components/compare/v1.262.0...v1.262.1) (2022-03-22)
+
+
+### Bug Fixes
+
+* **components:** stop bubbling for processed a11y arrow key events ([85c5738](https://github.com/webex/components/commit/85c5738e5f6374c92de92e8591f65a346f40197e))
+
+# [1.262.0](https://github.com/webex/components/compare/v1.261.0...v1.262.0) (2022-03-21)
+
+
+### Features
+
+* **WebexAdaptiveCard:** add onSubmit prop to notify when submit starts and ends ([bf68b7a](https://github.com/webex/components/commit/bf68b7ae5cd1d534ba96b93a29fe13d885224065))
+
+# [1.261.0](https://github.com/webex/components/compare/v1.260.0...v1.261.0) (2022-03-18)
+
+
+### Features
+
+* **Greeting:** implement new empty state for initial activity ([1a15cfa](https://github.com/webex/components/commit/1a15cfacb24ef79de7cc551703f40dd3f803869e))
+
+# [1.260.0](https://github.com/webex/components/compare/v1.259.1...v1.260.0) (2022-03-18)
+
+
+### Features
+
+* **inputs:** add aria-errormessage and aria-invalid on inputs ([380c5d1](https://github.com/webex/components/commit/380c5d1fc5b09d2a6d09398849829b03ff9b0b75))
+
+## [1.259.1](https://github.com/webex/components/compare/v1.259.0...v1.259.1) (2022-03-18)
+
+
+### Bug Fixes
+
+* **NumberInput:** add aria-label on increase and decrease buttons ([6c5af2e](https://github.com/webex/components/commit/6c5af2e63aaf2982bbede8ee2c37b143e5661aea))
+
+# [1.259.0](https://github.com/webex/components/compare/v1.258.1...v1.259.0) (2022-03-18)
+
+
+### Features
+
+* **components:** improve accessibility for Checkbox, Radio button and Toggle components ([4120fbb](https://github.com/webex/components/commit/4120fbb3fdc07617605969856dfa3d4abec56273))
+
+## [1.258.1](https://github.com/webex/components/compare/v1.258.0...v1.258.1) (2022-03-17)
+
+
+### Bug Fixes
+
+* **inputs:** add aria-label on clear button ([1fdc9b1](https://github.com/webex/components/commit/1fdc9b1488821209ee1608057bc8fd073d671c0d))
+
+# [1.258.0](https://github.com/webex/components/compare/v1.257.1...v1.258.0) (2022-03-16)
+
+
+### Bug Fixes
+
+* **ActivitiesJsonAdapter:** use only ac Column components as children of ac ColumnSet component ([1d64874](https://github.com/webex/components/commit/1d64874f07b19c6cf0d7cc8b3d28f8cbbdf6be98))
+* **WebexActivity:** do not display the message text if the message contains a card ([9b33781](https://github.com/webex/components/commit/9b33781b1f6b0692457202e0cdad51ec3c3ecf1d))
+
+
+### Features
+
+* **Popup:** implement Popup component ([4e6610f](https://github.com/webex/components/commit/4e6610fe215f2a183bde688a6768aec8070c7871))
+
+## [1.257.1](https://github.com/webex/components/compare/v1.257.0...v1.257.1) (2022-03-16)
+
+
+### Bug Fixes
+
+* **contexts:** export AdapterContext and MeetingContext ([c38f7fe](https://github.com/webex/components/commit/c38f7fe18055137be62e0ba4615e7d0f7cb7efb6))
+
+# [1.257.0](https://github.com/webex/components/compare/v1.256.5...v1.257.0) (2022-03-15)
+
+
+### Features
+
+* **WebexMessaging:** add loading state to WebexMessaging ([9a749ed](https://github.com/webex/components/commit/9a749ed971c27308f2a8dc42d45ccf98b385447e))
+
+## [1.256.5](https://github.com/webex/components/compare/v1.256.4...v1.256.5) (2022-03-15)
+
+
+### Bug Fixes
+
+* **components:** show box-shadow on input on iOS ([331c49f](https://github.com/webex/components/commit/331c49f07b58ec5bb36b58b61c88a6078e8b03d2))
+
+## [1.256.4](https://github.com/webex/components/compare/v1.256.3...v1.256.4) (2022-03-14)
+
+
+### Bug Fixes
+
+* **logger:** remove Winston configuration from components ([9c8b056](https://github.com/webex/components/commit/9c8b056501bca69de7e828dbf3d050e319289ba7))
+
+## [1.256.3](https://github.com/webex/components/compare/v1.256.2...v1.256.3) (2022-03-11)
+
+
+### Bug Fixes
+
+* **WebexActivity:** set white-space just for message text ([d69fa57](https://github.com/webex/components/commit/d69fa57b4abfc1d1c3615fc8f37bfebc415700cd))
+
+## [1.256.2](https://github.com/webex/components/compare/v1.256.1...v1.256.2) (2022-03-11)
+
+
+### Bug Fixes
+
+* **AdaptiveCardsUtil:** change the replaceAll method for compatibility with older browsers ([adf0329](https://github.com/webex/components/commit/adf0329e523f269501b6f12a40f93bb7381e3898))
+
+## [1.256.1](https://github.com/webex/components/compare/v1.256.0...v1.256.1) (2022-03-09)
+
+
+### Bug Fixes
+
+* **InputField:** set fixed height ([3dd3a42](https://github.com/webex/components/commit/3dd3a42d44e26532057fb6111895afb92a7e78e4))
+
+# [1.256.0](https://github.com/webex/components/compare/v1.255.2...v1.256.0) (2022-03-08)
+
+
+### Features
+
+* **AdaptiveCardsInputText:** implement inlineAction property ([dece811](https://github.com/webex/components/commit/dece811a538410821fc047bdb7607301748eb54d))
+
+## [1.255.2](https://github.com/webex/components/compare/v1.255.1...v1.255.2) (2022-03-08)
+
+
+### Bug Fixes
+
+* **Label:** prevent line break between text and required asterisk in Label component ([c4b7279](https://github.com/webex/components/commit/c4b72795fc6f87aaa0315db234dbee03ac15f5f3))
+
+## [1.255.1](https://github.com/webex/components/compare/v1.255.0...v1.255.1) (2022-03-07)
+
+
+### Bug Fixes
+
+* **WebexActivity:** make WebexActivity work if an adapter isn't yet present on the context ([04f2971](https://github.com/webex/components/commit/04f29711017cd66cbd18e1f45d3ef6cfb9b84d9d))
+
+# [1.255.0](https://github.com/webex/components/compare/v1.254.2...v1.255.0) (2022-03-07)
+
+
+### Bug Fixes
+
+* **components:** link label and input control in a more accessible way ([1e9e2da](https://github.com/webex/components/commit/1e9e2da710c4755e3a361196f05b0fbbbec30f2a))
+
+
+### Features
+
+* **themes:** add new classname to theme files for integration in web-client ([43500e2](https://github.com/webex/components/commit/43500e20f7256fa42be4fbbcf416e00e909e613c))
+
+## [1.254.2](https://github.com/webex/components/compare/v1.254.1...v1.254.2) (2022-03-03)
+
+
+### Bug Fixes
+
+* **hooks:** make useActivity and useAdaptiveCard work if an adapter isn't yet present on the context ([5bb40d0](https://github.com/webex/components/commit/5bb40d0bfd7c4a81657907908825fb75f645b434))
+
 ## [1.254.1](https://github.com/webex/components/compare/v1.254.0...v1.254.1) (2022-03-01)
 
 

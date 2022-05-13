@@ -1,10 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import webexComponentClasses from '../../helpers';
-import {useElementPosition, useRef} from '../../hooks';
+import {useRef} from '../../hooks';
 
 import Icon from '../../generic/Icon/Icon';
 import OptionsList from '../../generic/OptionsList/OptionsList';
+import Popup from '../../generic/Popup/Popup';
 import Label from '../Label/Label';
 import {uniqueId} from '../../../util';
 
@@ -16,6 +17,7 @@ import {uniqueId} from '../../../util';
  * @param {string} [props.className]  Custom CSS class to apply
  * @param {boolean} [props.disabled=false]  True when the control is disabled
  * @param {string} [props.error]  Error text
+ * @param {string} [props.id]  DOM id
  * @param {string} [props.label]  Label text
  * @param {Function} props.onChange  Action to perform on option selection
  * @param {object[]} [props.options]  Array of options
@@ -32,6 +34,7 @@ export default function Dropdown({
   className,
   disabled,
   error,
+  id: domId,
   label: controlLabel,
   onChange,
   options,
@@ -43,14 +46,11 @@ export default function Dropdown({
   value,
 }) {
   const [expanded, setExpanded] = useState(undefined);
-  const [layout, setLayout] = useState(undefined);
   const [cssClasses, sc] = webexComponentClasses('dropdown', className, {disabled});
   const label = options?.find((option) => option.value === value)?.label;
   const controlRef = useRef();
   const selectedOptionRef = useRef();
-  const position = useElementPosition(controlRef);
-  const labelId = uniqueId();
-  const optionsId = uniqueId();
+  const id = domId || uniqueId();
 
   const collapse = () => setExpanded(undefined);
   const expand = (withKey) => setExpanded({withKey});
@@ -81,6 +81,7 @@ export default function Dropdown({
       collapse();
     } else if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
       event.preventDefault(); // prevent page scrolling
+      event.stopPropagation(); // prevent other navigation
       expand(true);
     }
   };
@@ -95,16 +96,6 @@ export default function Dropdown({
 
     return cleanup;
   }, [expanded]);
-
-  useEffect(() => {
-    if (position) {
-      setLayout({
-        maxHeight: window.innerHeight - position.bottom - window.scrollY - 24,
-        minWidth: position.width,
-        top: position.bottom + 4,
-      });
-    }
-  }, [position]);
 
   useEffect(() => {
     let cleanup;
@@ -129,7 +120,7 @@ export default function Dropdown({
       className={cssClasses}
       style={style}
       error={error}
-      labelId={labelId}
+      id={id}
       label={controlLabel}
       required={required}
     >
@@ -137,35 +128,39 @@ export default function Dropdown({
       {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
       <div className={sc('control')} ref={controlRef} disabled={disabled} onKeyDown={handleKeyDown}>
         <div
-          aria-controls={optionsId}
+          aria-errormessage={error && `${id}-error`}
+          aria-invalid={error ? 'true' : 'false'}
+          aria-controls={`${id}-options`}
           aria-expanded={expanded}
           aria-haspopup="listbox"
           aria-label={ariaLabel}
-          aria-labelledby={labelId}
+          aria-labelledby={`${id}-label`}
           className={`${sc('selected-option')} ${expanded ? sc('expanded') : ''}`}
+          id={`${id}-control`}
           onClick={() => toggleExpanded(false)}
+          onKeyDown={handleSelectedOptionKeyDown}
           role="combobox"
           tabIndex={disabled ? -1 : tabIndex}
           title={tooltip}
-          onKeyDown={handleSelectedOptionKeyDown}
           ref={selectedOptionRef}
         >
           <span className={sc('label')}>{options === null ? 'Loading...' : (label || value || placeholder)}</span>
           <Icon name={expanded ? 'arrow-up' : 'arrow-down'} size={13} />
         </div>
         {expanded && (
-          <OptionsList
-            className={sc('options-list')}
-            options={options}
-            onSelect={handleOptionSelect}
-            withKey={expanded.withKey}
-            selected={value}
-            style={layout}
-            tabIndex={tabIndex}
-            onBlur={collapse}
-            id={optionsId}
-            labelId={labelId}
-          />
+          <Popup>
+            <OptionsList
+              className={sc('options-list')}
+              id={`${id}-options`}
+              labelId={`${id}-label`}
+              onBlur={collapse}
+              onSelect={handleOptionSelect}
+              options={options}
+              selected={value}
+              tabIndex={tabIndex}
+              withKey={expanded.withKey}
+            />
+          </Popup>
         )}
       </div>
     </Label>
@@ -177,6 +172,7 @@ Dropdown.propTypes = {
   className: PropTypes.string,
   disabled: PropTypes.bool,
   error: PropTypes.string,
+  id: PropTypes.string,
   label: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   options: PropTypes.arrayOf(PropTypes.shape({
@@ -196,6 +192,7 @@ Dropdown.defaultProps = {
   className: undefined,
   disabled: false,
   error: undefined,
+  id: undefined,
   label: undefined,
   options: [],
   placeholder: undefined,
