@@ -5,14 +5,20 @@ Array [
   <div
     className="wxc wxc-create-space"
   >
-    <label
+    <div
       className="wxc wxc-label wxc wxc-input-field"
     >
-      <div
+      <label
         className="wxc-label__label-text"
+        htmlFor="wxc-0-control"
+        id="wxc-0-label"
       >
-        Space name
-      </div>
+        <span
+          className="wxc-label__text"
+        >
+          Space name
+        </span>
+      </label>
       <div
         className="wxc-label__control"
       >
@@ -20,10 +26,14 @@ Array [
           className="wxc-input-field__form-control"
         >
           <input
+            aria-invalid="false"
+            aria-labelledby="wxc-0-label"
             autoFocus={false}
             className="wxc-input-field__input"
             disabled={false}
+            id="wxc-0-control"
             onChange={[Function]}
+            onKeyDown={[Function]}
             placeholder="Enter space name"
             required={false}
             tabIndex={0}
@@ -32,26 +42,32 @@ Array [
           />
         </div>
       </div>
-    </label>
+    </div>
     <div
       className="wxc wxc-add-collaborators"
     >
-      <label
+      <div
         className="wxc wxc-label"
       >
-        <div
+        <label
           className="wxc-label__label-text"
+          htmlFor="undefined-control"
+          id="undefined-label"
         >
-          People
-        </div>
+          <span
+            className="wxc-label__text"
+          >
+            People
+          </span>
+        </label>
         <div
           className="wxc-label__control"
         />
-      </label>
+      </div>
       <div
         className="wxc-add-collaborators__people-list-box"
       >
-        <label
+        <div
           className="wxc wxc-label wxc wxc-input-field"
         >
           <div
@@ -61,10 +77,14 @@ Array [
               className="wxc-input-field__form-control"
             >
               <input
+                aria-invalid="false"
+                aria-labelledby="wxc-0-label"
                 autoFocus={false}
                 className="wxc-input-field__input"
                 disabled={false}
+                id="wxc-0-control"
                 onChange={[Function]}
+                onKeyDown={[Function]}
                 placeholder="Add people"
                 required={false}
                 tabIndex={0}
@@ -73,8 +93,11 @@ Array [
               />
             </div>
           </div>
-        </label>
+        </div>
       </div>
+      <div
+        className="wxc-add-collaborators__suggestions"
+      />
     </div>
     
     <div
@@ -83,7 +106,6 @@ Array [
       <button
         autoFocus={false}
         className="wxc wxc-button wxc-button--primary"
-        disabled={false}
         onClick={[Function]}
         style={
           Object {
@@ -99,7 +121,6 @@ Array [
       <button
         autoFocus={false}
         className="wxc wxc-button wxc-button--join"
-        disabled={false}
         onClick={[Function]}
         style={
           Object {

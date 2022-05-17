@@ -27,43 +27,68 @@ const WebexAddCollaborators = forwardRef(({
   const [inputValue, setInputValue] = useState('');
   const [peopleSelected, setPeopleSelected] = useState([]);
   const [personIdSelected, setPersonIdSelected] = useState([]);
+  const [showContacts, setShowContacts] = useState(false);
+  const [contacts, setContacts] = useState([]);
+  const [collaborators, setCollaborators] = useState([]);
+  const [showCollaborators, setShowCollaborators] = useState(false);
   const [cssClasses, sc] = webexComponentClasses('add-collaborators');
   const adapter = useContext(AdapterContext);
 
-  let contactsList;
-  let collaboratorsList;
-
   const searchPeopleSuccess = (list) => {
-    contactsList = [...list];
+    setContacts([...list]);
   };
 
   const onError = () => {
-    contactsList = [];
+    setContacts([]);
   };
 
-  if (inputValue) {
-    if (webexLookAhead) {
-      adapter.peopleAdapter.searchPeople(inputValue)
-        .subscribe(searchPeopleSuccess, onError);
+  const callMemberLookAhead = async (value) => {
+    try {
+      const collaboratorsList = await memberLookAhead(value);
+
+      if (collaboratorsList && collaboratorsList.length) {
+        setCollaborators(collaboratorsList);
+      } else {
+        setCollaborators([]);
+      }
+    } catch (error) {
+      setCollaborators([]);
     }
-    if (typeof memberLookAhead === 'function') {
-      collaboratorsList = memberLookAhead(null, inputValue);
-    }
-  }
+  };
 
   const clearInput = () => {
     setInputValue('');
     setPersonIdSelected([]);
     setPeopleSelected([]);
-    contactsList = [];
+    setShowCollaborators(false);
+    setShowContacts(false);
   };
 
   useImperativeHandle(ref, () => ({
     clearInput,
   }));
 
+  const handleSearchPeople = (value) => {
+    if (webexLookAhead) {
+      setShowContacts(true);
+      adapter.peopleAdapter.searchPeople(value)
+        .subscribe(searchPeopleSuccess, onError);
+    }
+    if (typeof memberLookAhead === 'function') {
+      setShowCollaborators(true);
+      callMemberLookAhead(value);
+    }
+  };
+
   const handleOnChange = (value) => {
     setInputValue(value);
+
+    if (value !== '') {
+      handleSearchPeople(value);
+    } else {
+      setShowCollaborators(false);
+      setShowContacts(false);
+    }
   };
 
   const getEmail = (item) => (item?.emails ? item.emails[0] : '');
@@ -174,16 +199,12 @@ const WebexAddCollaborators = forwardRef(({
   };
 
   // function to render people list based on search
-  const renderSuggestions = () => {
-    if (!contactsList && !collaboratorsList) return null;
-
-    return (
-      <div className={sc('suggestions')}>
-        {renderPersonList(collaboratorsList, 'Collaborators')}
-        {renderPersonList(contactsList, 'Contacts')}
-      </div>
-    );
-  };
+  const renderSuggestions = () => (
+    <div className={sc('suggestions')}>
+      {showCollaborators && renderPersonList(collaborators, 'Collaborators')}
+      {showContacts && renderPersonList(contacts, 'Contacts')}
+    </div>
+  );
 
   return (
     <div className={cssClasses} style={style}>
