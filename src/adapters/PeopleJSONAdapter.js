@@ -97,11 +97,14 @@ export default class PeopleJSONAdapter extends PeopleAdapter {
   searchPeople(query) {
     return new Observable((observer) => {
       if (this.datasource[query]) {
-        observer.next(this.datasource[query]);
+        setTimeout(() => {
+          observer.next(this.datasource[query]);
+          observer.complete();
+        }, 500);
       } else {
         observer.error(new Error(`could not find the person with query${query}`));
+        observer.complete();
       }
-      observer.complete();
     });
   }
 }

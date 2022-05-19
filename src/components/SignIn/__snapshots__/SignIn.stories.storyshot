@@ -8,7 +8,6 @@ Array [
     <button
       autoFocus={false}
       className="wxc wxc-button wxc-button--join"
-      disabled={false}
       onClick={[Function]}
       style={
         Object {
